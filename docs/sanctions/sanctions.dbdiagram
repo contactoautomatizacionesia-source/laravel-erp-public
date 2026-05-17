@@ -1,0 +1,510 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "users",
+      "schemaName": "public",
+      "x": -2.7420761909347853,
+      "y": -122.75337590293293
+    },
+    {
+      "name": "plans",
+      "schemaName": "public",
+      "x": -307.28184175101035,
+      "y": 0.09846005286846093
+    },
+    {
+      "name": "benefits",
+      "schemaName": "public",
+      "x": -376.68444922305014,
+      "y": 155.8461380662277
+    },
+    {
+      "name": "cat_offense_types",
+      "schemaName": "public",
+      "x": 12,
+      "y": 540
+    },
+    {
+      "name": "cat_sanction_types",
+      "schemaName": "public",
+      "x": 12,
+      "y": 206
+    },
+    {
+      "name": "cat_action_types",
+      "schemaName": "public",
+      "x": 12,
+      "y": 1222
+    },
+    {
+      "name": "cat_complaint_sources",
+      "schemaName": "public",
+      "x": 12,
+      "y": 810
+    },
+    {
+      "name": "cat_mitigating_factors",
+      "schemaName": "public",
+      "x": 12,
+      "y": 1460
+    },
+    {
+      "name": "cat_process_statuses",
+      "schemaName": "public",
+      "x": 12,
+      "y": 1016
+    },
+    {
+      "name": "investigations",
+      "schemaName": "public",
+      "x": 1291.73095703125,
+      "y": 94
+    },
+    {
+      "name": "investigation_evidences",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 73
+    },
+    {
+      "name": "process_notifications",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 375
+    },
+    {
+      "name": "eui_defenses",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 1107
+    },
+    {
+      "name": "sanction_resolutions",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 709
+    },
+    {
+      "name": "applied_mitigating_factors",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 1378
+    },
+    {
+      "name": "sanction_enforcements",
+      "schemaName": "public",
+      "x": 2542.84033203125,
+      "y": 366
+    },
+    {
+      "name": "committee_reviews",
+      "schemaName": "public",
+      "x": 1908.13525390625,
+      "y": 1584
+    },
+    {
+      "name": "eui_status_logs",
+      "schemaName": "public",
+      "x": 2542.84033203125,
+      "y": 32
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "sponsor_id"
+      ],
+      "secondTableName": "users",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "plans",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "plan_id"
+      ],
+      "secondTableName": "users",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "plans",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "plan_id"
+      ],
+      "secondTableName": "benefits",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "eui_id"
+      ],
+      "secondTableName": "investigation",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_offense_type",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "offense_type_id"
+      ],
+      "secondTableName": "investigation",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_complaint_source",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "source_id"
+      ],
+      "secondTableName": "investigation",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_process_status",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "status_id"
+      ],
+      "secondTableName": "investigation",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "instructor_id"
+      ],
+      "secondTableName": "investigation",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "investigation_evidence",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "uploaded_by_id"
+      ],
+      "secondTableName": "investigation_evidence",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "process_notification",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "sent_by_id"
+      ],
+      "secondTableName": "process_notification",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "eui_defense",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "sanction_resolution",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_sanction_type",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "sanction_type_id"
+      ],
+      "secondTableName": "sanction_resolution",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_action_type",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "action_type_id"
+      ],
+      "secondTableName": "sanction_resolution",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "resolved_by_id"
+      ],
+      "secondTableName": "sanction_resolution",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "applied_mitigating",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_mitigating_factor",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "mitigating_id"
+      ],
+      "secondTableName": "applied_mitigating",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "sanction_resolution",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "resolution_id"
+      ],
+      "secondTableName": "sanction_enforcement",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "committee_review",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "requested_by_id"
+      ],
+      "secondTableName": "committee_review",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "eui_id"
+      ],
+      "secondTableName": "eui_status_log",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "investigation",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "investigation_id"
+      ],
+      "secondTableName": "eui_status_log",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "sanction_resolution",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "resolution_id"
+      ],
+      "secondTableName": "eui_status_log",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "users",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "changed_by_id"
+      ],
+      "secondTableName": "eui_status_log",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}

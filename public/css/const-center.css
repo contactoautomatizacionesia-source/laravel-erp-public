@@ -1,0 +1,1108 @@
+.transfer-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+
+
+.product-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-color: var(--base_color);
+}
+
+.product-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.product-card.has-selection {
+    border-color: var(--base_color);
+    box-shadow: 0 6px 18px rgba(var(--base_color_rgb), 0.12);
+}
+
+.product-card.has-selection .product-header {
+    background: rgba(var(--base_color_rgb), 0.05);
+}
+
+.scale_2{
+    transform: scale(1.5);
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.product-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.product-title {
+    font-weight: 600;
+    margin: 0;
+    color: var(--text_color);
+}
+
+.sku-list {
+    display: none;
+}
+
+.sku-item {
+    padding: 15px 0;
+    border-bottom: 1px dashed #eee;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: space-between; */
+}
+
+.sku-item.is-selected {
+    background: rgba(var(--base_color_rgb), 0.05);
+    border-radius: 8px;
+    padding: 12px 10px;
+}
+
+.sku-item.is-selected .qty-input {
+    border-color: var(--base_color);
+    background: #fff;
+    font-weight: 700;
+}
+
+.sku-item:last-child {
+    border-bottom: none;
+}
+
+.sku-name {
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 150px;
+}
+
+.range-wrapper {
+    flex-grow: 1;
+    margin: 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Estilo moderno para input range */
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid var(--base_color);
+    cursor: pointer;
+    margin-top: -8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    background: var(--base_color);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: #eef2f7;
+    border-radius: 10px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+.qty-input {
+    width: 80px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #dce1ef;
+    padding: 6px;
+}
+
+.qty-input:focus {
+    border-color: var(--base_color);
+    outline: none;
+}
+
+.stock-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #e1f5fe;
+    color: #0288d1;
+    font-weight: 600;
+    white-space: nowrap;
+    gap: 5px;
+}
+
+.transfer-step-card {
+    background: #ffffff;
+    border: 1px solid #eef0f3;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.transfer-step-card .step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(46, 204, 113, 0.12);
+    color: var(--toolkit_corporative-green-color);
+    font-size: 20px;
+}
+
+.transfer-countdown {
+    font-weight: 700;
+    color: var(--toolkit_corporative-orange-color);
+}
+
+.total-summary {
+    font-size: 14px;
+    color: var(--text_color);
+    font-weight: 500;
+    background: var(--bg_white);
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--base_color);
+}
+
+/* Removed loading-overlay styles in favor of inline empty cart styles */
+.cart-moving {
+    color: var(--base_color) !important;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+    animation: moveCart 2.5s infinite cubic-bezier(.4, 0, .2, 1);
+    will-change: transform;
+}
+
+.dots-trail {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    width: 100px;
+}
+
+.dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--base_color);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.dot.d1 {
+    left: 15px;
+    animation: showDot 2s infinite ease-in-out 0.2s;
+}
+
+.dot.d2 {
+    left: 45px;
+    animation: showDot 2s infinite ease-in-out 0.6s;
+}
+
+.dot.d3 {
+    left: 75px;
+    animation: showDot 2s infinite ease-in-out 1s;
+}
+
+@keyframes moveCart {
+    0% {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateX(-80px);
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(-80px);
+        opacity: 0;
+    }
+}
+
+@keyframes showDot {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    80% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .transfer-section {
+        padding: 20px;
+    }
+
+    .product-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .product-meta {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .product-meta .badge {
+        margin-right: 0 !important;
+    }
+
+    .product-meta .ti-angle-down {
+        margin-left: auto;
+    }
+
+    .range-wrapper {
+        margin: 8px 0 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .transfer-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .transfer-actions .btn-toolkit {
+        width: 100%;
+    }
+
+    .transfer-actions .btn-toolkit i{
+        display: none;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .transfer-section {
+        padding: 16px;
+        border-radius: 8px;
+    }
+
+    .product-info {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .product-thumb {
+        width: 40px;
+        height: 40px;
+    }
+
+    .product-title {
+        font-size: 14px;
+    }
+
+    .sku-name {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .stock-badge {
+        font-size: 11px;
+        padding: 4px 8px;
+        white-space: normal;
+    }
+
+    .range-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .qty-input {
+        width: 100%;
+    }
+
+    .total-summary {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .transfer-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .transfer-actions .btn-toolkit {
+        width: 100%;
+    }
+
+    .product-meta {
+        gap: 6px;
+    }
+
+    .product-meta .badge {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}
+
+/* --- New Compact Layout & Selected Table --- */
+.transfer-panel-right {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 160px);
+    overflow: hidden;
+}
+
+.selected-products-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.selected-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.selected-table thead th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    z-index: 10;
+    padding: 12px 15px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6c757d;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.selected-table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f5f6f8;
+}
+
+.selected-item-row:hover {
+    background-color: rgba(var(--base_color_rgb), 0.02);
+}
+
+.selected-item-row .product-name {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+.selected-item-row .sku-tag {
+    font-size: 11px;
+    color: #6c757d;
+}
+
+.qty-pill-input {
+    width: 70px;
+    height: 32px;
+    text-align: center;
+    border: 1px solid #e1e5eb;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.btn-remove-item {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #fff1f0;
+    color: #ff4d4f;
+    transition: all 0.2s;
+}
+
+.btn-remove-item:hover {
+    background: #ff4d4f;
+    color: #fff;
+}
+
+/* --- Footer Summary --- */
+.transfer-footer {
+    background: #fff;
+    border-top: 1px solid #eef0f3;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+}
+
+.summary-pills {
+    display: flex;
+    gap: 15px;
+}
+
+.summary-pill {
+    background: #f8f9fa;
+    padding: 6px 15px;
+    border-radius: 50px;
+    border: 1px solid #eef0f3;
+    font-size: 13px;
+}
+
+.summary-pill .label {
+    color: #6c757d;
+    margin-right: 5px;
+}
+
+.summary-pill .value {
+    font-weight: 700;
+    color: var(--text_color);
+}
+
+/* --- Modal Modernization --- */
+.modal-content {
+    max-height: 90vh
+}
+
+.modal-header {
+    border-bottom: 1px solid #f0f2f5;
+    background-color: #fafbfc;
+}
+
+.modal-footer {
+    border-top: 1px solid #f0f2f5;
+    background-color: #fafbfc;
+}
+
+.section-card {
+    background: #ffffff;
+    border: 1px solid #eef2f6;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.detail-card-route {
+    background: linear-gradient(135deg, rgba(var(--base_color_rgb), 0.04) 0%, #ffffff 100%);
+    border-left: 4px solid var(--base_color);
+}
+
+.detail-card-logistics {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.04) 0%, #ffffff 100%);
+    border-left: 4px solid #f59e0b;
+}
+
+.info-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    margin-bottom: 4px;
+    display: block;
+    font-weight: 700;
+}
+
+.info-value {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 13.5px;
+    display: block;
+}
+
+.badge-toolkit {
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* --- Mobile Tabs & Responsive Adjustments --- */
+.mobile-tabs-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.mobile-tabs-nav .nav-tabs .nav-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 3px solid transparent !important;
+    border-radius: 0;
+    color: #64748b;
+}
+
+.mobile-tabs-nav .nav-tabs .nav-link.active {
+    border-bottom: 3px solid var(--base_color) !important;
+    color: var(--base_color) !important;
+    background: rgba(var(--base_color_rgb), 0.05);
+}
+
+@media (max-width: 767.98px) {
+    #transferTabContent {
+        height: calc(100vh - 160px) !important;
+    }
+    
+    #logistics-panel, #products-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Adjust table for mobile cards */
+    .selected-table thead {
+        display: none !important;
+    }
+
+    .selected-table tbody td {
+        display: block !important;
+        width: 100% !important;
+        padding: 5px 20px !important;
+        border: none !important;
+        text-align: left !important;
+    }
+
+    .selected-item-row {
+        display: block !important;
+        padding: 15px 0 !important;
+        border-bottom: 1px solid #f0f2f5 !important;
+        position: relative !important;
+    }
+
+    .selected-item-row img {
+        margin-bottom: 10px;
+    }
+
+    .qty-pill-input {
+        width: 100% !important;
+        margin-top: 5px !important;
+    }
+
+    .btn-remove-item {
+        position: absolute !important;
+        top: 15px !important;
+        right: 15px !important;
+    }
+
+    .transfer-footer {
+        padding: 15px !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    .summary-pills {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Modal Specific Mobile Adjustments */
+    #modalTransferTabContent {
+        height: auto !important;
+    }
+
+    #modal-filters-panel, #modal-products-panel {
+        height: 65vh !important;
+        overflow-y: auto !important;
+        background: #fff !important;
+    }
+
+    #modalTransferTabContent > .tab-pane.active {
+        display: flex !important;
+    }
+
+    .modal-product-card {
+        margin-bottom: 20px !important;
+    }
+
+    /* Fixed "Done" button for modal on mobile */
+    .mobile-modal-done-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1050;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(var(--base_color_rgb), 0.4);
+    }
+}
+
+
+
+
+/* PRODUCT SELECTION */
+#productSelectionModal .modal-xl { max-width: 95%; }
+
+.modal-product-card {
+    border: 1px solid #eef2f7;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: #fff;
+    overflow: hidden;
+}
+
+.modal-product-card:hover {
+    border-color: rgba(var(--base_color_rgb), 0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+    transform: translateY(-2px);
+}
+
+.modal-product-card.has-selection {
+    border-color: var(--base_color);
+    background: rgba(var(--base_color_rgb), 0.01);
+}
+
+.modal-product-header {
+    padding: 15px 20px;
+    background: #f9fdff;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+}
+
+.modal-sku-row {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f8fafc;
+    transition: background 0.2s;
+}
+
+.modal-sku-row:hover {
+    background: #f5fcff;
+}
+
+.modal-sku-row:last-child {
+    border-bottom: none;
+}
+
+.range-selector-premium {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #fff;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.modal-sku-row.is-selected .range-selector-premium {
+    box-shadow: 0 4px 12px rgba(var(--base_color_rgb), 0.08);
+}
+
+.badge-soft-primary {
+    background: rgba(var(--base_color_rgb), 0.1);
+    color: var(--base_color);
+    font-weight: 600;
+}
+
+.bg-light-soft {
+    background-color: #f8fafc;
+}
+
+.shadow-premium {
+    box-shadow: 0 10px 20px -5px rgba(var(--base_color_rgb), 0.3);
+}
+
+#productSelectionModal .primary_input_label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+}
+
+
+/* CONFIRM TRANSFER MODAL */
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#confirmTransferModal .section-card {
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+#confirmTransferModal .section-card:hover {
+    transform: translateY(-2px);
+}
+
+
+.wrap-transfer{
+    overflow: hidden; 
+    /* height: calc(95vh - 100px); */
+}
+
+
+
+/* ESTILOS PARA LOS LOTES */
+.modal-lot-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.modal-lot-row:first-child {
+    border-top: none;
+}
+
+.modal-lot-meta {
+    font-size: 12px;
+    color: #6b7280;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.modal-lot-select {
+    min-width: 220px;
+}
+
+.modal-lot-actions .btn-remove-lot-row {
+    color: #ef4444;
+    background: transparent;
+    border: 0;
+}
+
+.modal-add-lot {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+
+
+
+
+
+
+/* =========================================================
+   TIMELINE DE TRANSFERENCIAS (ANIMADO)
+   ========================================================= */
+.transfer-timeline {
+    display: flex;
+    position: relative;
+    margin: 30px auto 40px;
+    max-width: 800px;
+    z-index: 1;
+}
+
+/* Línea base (gris) */
+.transfer-timeline::before {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 6px;
+    background: #e9ecef;
+    z-index: -2;
+    border-radius: 6px;
+}
+
+/* Línea de progreso (color) */
+.timeline-progress {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 6px;
+    z-index: -1;
+    border-radius: 6px;
+    width: 0;
+}
+
+/* Animaciones de llenado para la línea */
+@keyframes fillProgressTransit {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 25%;
+    }
+}
+
+@keyframes fillProgressReceived {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 50%;
+    }
+}
+
+@keyframes moveStripes {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 28px 0;
+    }
+}
+
+/* Estado: En Tránsito (Línea a la mitad + Rayas moviéndose) */
+.transfer-timeline.status-dispatched .timeline-progress {
+    animation: fillProgressTransit 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards, moveStripes 1s linear infinite;
+    background: repeating-linear-gradient(45deg,
+            var(--toolkit_corporative-orange-color, #fd7e14),
+            var(--toolkit_corporative-orange-color, #fd7e14) 10px,
+            #ffc107 10px,
+            #ffc107 20px);
+    background-size: 28px 28px;
+}
+
+/* Estado: Recibido Total (Línea Verde al 100%) */
+.transfer-timeline.status-received .timeline-progress {
+    background: var(--toolkit_corporative-green-color, #28a745);
+    animation: fillProgressReceived 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Estado: Recibido con Novedad (Línea Roja al 100%) */
+.transfer-timeline.status-received_with_discrepancies .timeline-progress {
+    background: var(--toolkit_corporative-red-color, #dc3545);
+    animation: fillProgressReceived 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Pasos y Nodos (Iconos) */
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.timeline-icon {
+    position: relative !important;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 24px;
+    color: #adb5bd;
+    transition: all 0.5s ease;
+    box-shadow: 0 0 0 6px #fff;
+    /* Corta la línea de fondo para que no se vea por debajo del círculo */
+}
+
+/* Estilos por Estado del Paso */
+.timeline-step.completed .timeline-icon {
+    border-color: var(--toolkit_corporative-green-color, #28a745);
+    color: var(--toolkit_corporative-green-color, #28a745);
+}
+
+.timeline-step.in-progress .timeline-icon {
+    border-color: var(--toolkit_corporative-orange-color, #fd7e14);
+    color: var(--toolkit_corporative-orange-color, #fd7e14);
+    animation: pulseOrange 2s infinite;
+}
+
+.timeline-step.novelty .timeline-icon {
+    border-color: var(--toolkit_corporative-red-color, #dc3545);
+    color: var(--toolkit_corporative-red-color, #dc3545);
+}
+
+@keyframes pulseOrange {
+    0% {
+        box-shadow: 0 0 0 0 rgba(253, 126, 20, 0.4), 0 0 0 6px #fff;
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(253, 126, 20, 0), 0 0 0 6px #fff;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(253, 126, 20, 0), 0 0 0 6px #fff;
+    }
+}
+
+
+
+/* =========================================================
+   TIMELINE MOBILE RESPONSIVE (Estilo Amazon Vertical)
+   ========================================================= */
+@media (max-width: 767px) {
+
+    /* 1. Volver el contenedor vertical */
+    .transfer-timeline {
+        flex-direction: column;
+        margin: 20px 0;
+        padding-left: 10px;
+    }
+
+    /* 2. Ajuste de la línea base gris a vertical */
+    .transfer-timeline::before {
+        top: 28px;
+        /* Inicia en el centro del primer icono (56px / 2 = 28) */
+        left: 35px;
+        /* Mitad del icono (28) + 10 de padding - 3 de la mitad de la línea = 35 */
+        width: 6px !important;
+        height: calc(100% - 56px) !important;
+        /* Llega justo al centro del último icono */
+    }
+
+    /* 3. Ajuste de la línea de progreso de color a vertical */
+    .timeline-progress {
+        top: 28px;
+        left: 35px;
+        width: 6px !important;
+        height: 0;
+        /* Inicia oculta para la animación */
+    }
+
+    /* 4. Redefinir las animaciones para que afecten el Height en vez del Width */
+    @keyframes fillProgressTransitMobile {
+        from {
+            height: 0;
+            width: 6px;
+        }
+
+        to {
+            height: calc((100% - 56px) / 2);
+            width: 6px;
+        }
+
+        /* En tránsito (A la mitad de la altura) */
+    }
+
+    @keyframes fillProgressReceivedMobile {
+        from {
+            height: 0;
+            width: 6px;
+        }
+
+        to {
+            height: calc(100% - 56px);
+            width: 6px;
+        }
+
+        /* Recibido (Altura total) */
+    }
+
+    .transfer-timeline.status-dispatched .timeline-progress {
+        animation: fillProgressTransitMobile 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards, moveStripes 1s linear infinite !important;
+    }
+
+    .transfer-timeline.status-received .timeline-progress,
+    .transfer-timeline.status-received_with_discrepancies .timeline-progress {
+        animation: fillProgressReceivedMobile 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+    }
+
+    /* 5. Convertir los "steps" de columnas a filas (Icono a la izq, texto a la der) */
+    .timeline-step {
+        flex-direction: row;
+        text-align: left;
+        margin-bottom: 40px;
+        /* Separación vertical entre pasos */
+    }
+
+    .timeline-step:last-child {
+        margin-bottom: 0;
+    }
+
+    .timeline-icon {
+        margin: 0 20px 0 0;
+        /* Margen derecho en lugar de centrado */
+        flex-shrink: 0;
+        /* Evitar que el icono se apachurre por el texto */
+        z-index: 2;
+        /* Para que quede por encima de la línea */
+    }
+
+    .timeline-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 2px;
+    }
+
+    /* 6. Ajustar las tarjetas de detalles inferiores (Origen, Destino) para mejor lectura */
+    .row.text-center.form-card {
+        text-align: left !important;
+    }
+
+    .row.text-center.form-card .col-md-4 {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .row.text-center.form-card .col-md-4:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+}

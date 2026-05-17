@@ -1,0 +1,13 @@
+{
+    "name": "ClubPoint",
+    "alias": "clubpoint",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ClubPoint\\Providers\\ClubPointServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

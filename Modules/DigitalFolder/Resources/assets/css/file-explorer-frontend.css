@@ -1,0 +1,108 @@
+/* =========================================================
+   File Explorer — Frontend-only styles
+   Requires: file-explorer-shared.css
+   ========================================================= */
+
+/* ----- Outer container ----- */
+.fe-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--fe-shadow);
+    overflow: hidden;
+    min-height: 500px;
+}
+
+/* ----- Header (breadcrumb + actions bar) ----- */
+.fe-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid var(--fe-border);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Override shared breadcrumb padding for the header context */
+.fe-header .fe-breadcrumb {
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+/* ----- Content area ----- */
+.fe-content {
+    padding: 20px;
+}
+
+/* ----- Action buttons ----- */
+.fe-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.fe-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--fe-border);
+    background: #fff;
+    color: var(--fe-text-primary);
+    text-decoration: none;
+}
+
+.fe-btn:hover {
+    background: #f5f7fa;
+    text-decoration: none;
+    color: var(--fe-text-primary);
+}
+
+.fe-btn.primary {
+    background: var(--fe-primary);
+    border-color: var(--fe-primary);
+    color: #fff;
+}
+
+.fe-btn.primary:hover {
+    opacity: 0.9;
+    color: #fff;
+}
+
+/* ----- No access state ----- */
+.fe-no-access {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.fe-no-access i {
+    font-size: 72px;
+    color: var(--fe-text-muted);
+    opacity: 0.3;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.fe-no-access h4 {
+    color: var(--fe-text-primary);
+    margin-bottom: 10px;
+}
+
+.fe-no-access p {
+    color: var(--fe-text-muted);
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 768px) {
+    .fe-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

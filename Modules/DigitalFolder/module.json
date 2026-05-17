@@ -1,0 +1,13 @@
+{
+    "name": "DigitalFolder",
+    "alias": "digitalfolder",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DigitalFolder\\Providers\\DigitalFolderServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

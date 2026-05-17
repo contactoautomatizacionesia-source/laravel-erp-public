@@ -1,0 +1,13 @@
+{
+    "name": "NetworkTree",
+    "alias": "networktree",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\NetworkTree\\Providers\\NetworkTreeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

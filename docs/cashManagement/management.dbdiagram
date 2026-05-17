@@ -1,0 +1,237 @@
+{
+  "version": "1.0.0",
+  "darkMode": true,
+  "gridEnabling": false,
+  "detailLevel": "All",
+  "tablePositions": [
+    {
+      "name": "countries",
+      "schemaName": "public",
+      "x": 0,
+      "y": 50
+    },
+    {
+      "name": "payment_methods",
+      "schemaName": "public",
+      "x": 280.24853515625,
+      "y": 50
+    },
+    {
+      "name": "cat_denominations",
+      "schemaName": "public",
+      "x": 647.5615234375,
+      "y": 50
+    },
+    {
+      "name": "cash_boxes",
+      "schemaName": "public",
+      "x": 968.212890625,
+      "y": 50
+    },
+    {
+      "name": "cash_box_assignments",
+      "schemaName": "public",
+      "x": 0,
+      "y": 228
+    },
+    {
+      "name": "cash_sessions",
+      "schemaName": "public",
+      "x": 280.24853515625,
+      "y": 196
+    },
+    {
+      "name": "cash_session_denominations",
+      "schemaName": "public",
+      "x": 647.5615234375,
+      "y": 324
+    },
+    {
+      "name": "cash_session_payments",
+      "schemaName": "public",
+      "x": 968.212890625,
+      "y": 452
+    },
+    {
+      "name": "cash_discrepancies",
+      "schemaName": "public",
+      "x": 0,
+      "y": 502
+    },
+    {
+      "name": "cash_transfers",
+      "schemaName": "public",
+      "x": 280.24853515625,
+      "y": 566
+    }
+  ],
+  "tableGroupCollapseStates": [],
+  "stickyNoteLayouts": [],
+  "referencePaths": [
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "countries",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "country_id"
+      ],
+      "secondTableName": "cat_denominations",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_boxes",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "parent_id"
+      ],
+      "secondTableName": "cash_boxes",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_boxes",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "cash_box_id"
+      ],
+      "secondTableName": "cash_box_assignments",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_box_assignments",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "assignment_id"
+      ],
+      "secondTableName": "cash_sessions",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_sessions",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "session_id"
+      ],
+      "secondTableName": "cash_session_denominations",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cat_denominations",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "denomination_id"
+      ],
+      "secondTableName": "cash_session_denominations",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_sessions",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "session_id"
+      ],
+      "secondTableName": "cash_session_payments",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "payment_methods",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "payment_method_id"
+      ],
+      "secondTableName": "cash_session_payments",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_sessions",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "session_id"
+      ],
+      "secondTableName": "cash_discrepancies",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_sessions",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "origin_session_id"
+      ],
+      "secondTableName": "cash_transfers",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    },
+    {
+      "firstFieldNames": [
+        "id"
+      ],
+      "firstTableName": "cash_boxes",
+      "firstSchemaName": "public",
+      "firstRelation": "1",
+      "secondFieldNames": [
+        "destination_box_id"
+      ],
+      "secondTableName": "cash_transfers",
+      "secondSchemaName": "public",
+      "secondRelation": "*",
+      "checkPoints": []
+    }
+  ]
+}

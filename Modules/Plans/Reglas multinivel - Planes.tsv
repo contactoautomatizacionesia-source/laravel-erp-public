@@ -1,0 +1,43 @@
+R1 => Puntos mayores a 1.6, esta no suma ni acumula para escalar
+R2 => Rango de puntos entre 0 y 79.9 puntos acumulados compras personales
+R26 => Firma de contratos
+R4 => Suma puntos por compras personales"
+"R3 => Puntos entre 80 - 159.9 
+R4 => Suma puntos por compras personales"
+"R5 => Puntos entre 160 - 239.9
+R4 => Suma puntos por compras personales"
+"R6=>  Puntos entre 240 - 319.9
+R4 => Suma puntos por compras personales"
+"R7 =>  Puntos entre 320 - 399.9
+R4 => Suma puntos por compras personales"
+"R8 => Acumular un total de 400 puntos o más.
+R4 => Suma puntos por compras personales"
+"R9 => Cerrar ciclo con plan anterior ""Life""
+R10Cond => Ventas personales que sumen 400 puntos propios
+                                                  ciclo 1: 200 puntos ciclo 2: 200 puntos
+R27Cond => Ventas personales que sumen 400 puntos propios
+                                                  ciclo 1: 300 puntos ciclo 2: 100 puntos
+R28Cond => Ventas personales que sumen 400 puntos propios
+                                                  ciclo 1: 400 puntos ciclo 2: 0 puntos
+R11Cond => Suma de 500 puntos con trabajo de red
+                                                 Ciclo 1 Realizar 200 puntos personales y 300 en la Red No Life directa Ciclo 2: 0 puntos
+R12 => Para llegar: cumplir con la R10 o R11
+
+- La calificación es por los dos ciclos, siempre se evalua segundo ciclo, los beneficios solo de dan con el cierre del segundo ciclo.
+- Se puede llegar medicante R10 o R11, el sistema lo evalua"
+"R13 => Contar con cuatro (4) empresarios existente en el plan inferior ""Life Platino"" en la primera generación ""Hijos"" con ingresos residuales equivalentes al valor del punto por trece (13), ejemplo (29900*13 = $)
+R14 => Contar con 12 empresarios título Life (en cualquier modalidad) debajo de sus Platinos cada uno debe mover mínimo 4 puntos (personales o de su red NO Life)
+R16 => Cerrar ciclo con plan anterior ""Life Platino""
+R27 => Debe recibir beneficios de la red"
+"R17 => Cerrar un ciclo con el plan anterior ""Life Zafiro""
+R18 => Contar con ocho (8) empresarios Life Platino en la primera generación, cada uno debe haber alcanzado beneficios por compra de red equivalentes al valor del punto por trece (13)
+R19 => Contar con un total de 24 empresarios con título Life debajo de todos sus Life Platino, cada uno de los 24 Life debe realizar mínimo 4 puntos de compras (personales o de su red NO Life)
+R27 => Debe recibir beneficios de la red"
+"R20 => Cerrar un ciclo con el plan anterior ""Life Esmeralda""
+R21 => Contar con doce (12) empresarios Life Platino en su primera generación, cada uno debe alcanzar beneficios por compra de red equivalentes al valor del punto por trece (13)
+R22 => Contar con un total de treinta y seis (36) empresarios con título Life debajo de todos sus Life Platino, cada uno de los 36 Life debe realizar mínimo 4 puntos de compras (personales o de su red NO Life)
+R27 => Debe recibir beneficios de la red"
+"R23 => Cerrar un ciclo con el plan anterior ""Life Diamante""
+R24 => Contar con dieciséis (16) empresarios Life Platino de primera generación, cada uno debe haber alcanzado beneficios por compra de red equivalentes al valor del punto por trece (13)
+R25 => Contar con un total cuarenta y ocho (48) empresarios título Life debajo de todos sus Life Platino, cada uno debe realizar mínimo 4 puntos de compras (personales o de su red NO Life)
+R27 => Debe recibir beneficios de la red"

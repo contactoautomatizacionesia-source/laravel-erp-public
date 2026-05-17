@@ -1,0 +1,13 @@
+{
+    "name": "ScheduleManagement",
+    "alias": "schedulemanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ScheduleManagement\\Providers\\ScheduleManagementServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

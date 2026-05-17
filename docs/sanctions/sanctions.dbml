@@ -1,0 +1,401 @@
+// =====================================================================
+// LIFEHUNI - MÓDULO DE REGLAMENTO Y SANCIONES
+// Modelo de datos para dbdiagram.io v4
+// Basado en Manual del Empresario - Secciones 2.17 a 2.19
+//
+// ORGANIZACIÓN VISUAL SUGERIDA EN dbdiagram.io:
+//   Columna IZQUIERDA  → Tablas existentes (users, plans, benefits)
+//   Columna CENTRO     → Enums + Tablas paramétricas (cat_*)
+//   Columna DERECHA    → Tablas transaccionales (proceso disciplinario)
+// =====================================================================
+
+
+// =====================================================================
+// ENUMS
+// Valores fijos de dominio. Reemplazan los varchar libres y evitan
+// datos inválidos en la base de datos.
+// =====================================================================
+
+Enum eui_code_status {
+  ACTIVE          [note: 'Código vigente, EUI operativo']
+  EXPIRED         [note: 'Sin compras por más de 12 meses (sec. 2.1.3)']
+  SUSPENDED       [note: 'Bloqueado temporalmente por sanción disciplinaria']
+  CANCELLED       [note: 'Contrato terminado definitivamente']
+}
+
+Enum offense_level {
+  MINOR           [note: 'No causa perjuicio a la empresa (sec. 2.17.1)']
+  MODERATE        [note: 'Causa perjuicio moderado: buen nombre, competencia desleal (sec. 2.17.2)']
+  SEVERE          [note: 'Causa perjuicio económico o uso de información sensible (sec. 2.17.3)']
+}
+
+Enum sanction_code {
+  WRITTEN_WARNING         [note: 'Primera sanción para faltas leves']
+  WRITTEN_WARNING_RECORD  [note: 'Segunda sanción leve: con copia al historial del EUI']
+  SUSPENSION_1_5_DAYS     [note: 'Suspensión multinivel 1 a 5 días (falta moderada 1a vez)']
+  SUSPENSION_6_15_DAYS    [note: 'Suspensión multinivel 6 a 15 días (falta moderada 2a vez)']
+  SUSPENSION_16_30_DAYS   [note: 'Suspensión multinivel 16 a 30 días (falta moderada 3a vez)']
+  SUSPENSION_2_3_MONTHS   [note: 'Suspensión 2 a 3 meses (falta grave 1a vez)']
+  SUSPENSION_3_6_MONTHS   [note: 'Suspensión 3.5 a 6 meses (falta grave 2a vez)']
+  CONTRACT_TERMINATION    [note: 'Terminación unilateral del contrato (falta grave 3a vez)']
+}
+
+Enum action_code {
+  FREEZE_EARNINGS         [note: 'Retiene utilidades, bonos, incentivos (sec. 2.18.4)']
+  BLOCK_ORDERS            [note: 'Impide realización de nuevos pedidos (sec. 2.18.4)']
+  SUSPEND_MULTILEVEL      [note: 'Bloquea actividad de representación en red (sec. 2.18.4)']
+  BLOCK_QUALIFICATION     [note: 'Suspende avance en rangos y títulos (sec. 2.18.6)']
+  OFFENSE_REPARATION      [note: 'Retención para recompensar al afectado (sec. 2.18.5)']
+  TERMINATE_CONTRACT      [note: 'Finalización definitiva del vínculo (sec. 2.18.1)']
+}
+
+Enum complaint_source {
+  OWN_INITIATIVE          [note: 'Lifehuni detecta la infracción directamente']
+  THIRD_PARTY             [note: 'Información aportada por otro EUI o persona']
+  NEWS                    [note: 'Información pública o de medios de comunicación']
+  DATA_MESSAGE            [note: 'Correo, WhatsApp, SMS u otro medio digital']
+  OTHER                   [note: 'Cualquier otra fuente no clasificada']
+}
+
+Enum mitigating_code {
+  ACCEPTS_OFFENSE         [note: 'EUI acepta la falta cometida, evita desgaste investigativo']
+  COOPERATES              [note: 'EUI colabora activamente con la investigación']
+  PREVENTED_DAMAGE        [note: 'EUI realizó actos para evitar daños a la empresa']
+  NO_MALICE               [note: 'EUI no actuó con dolo, imprudencia ni violación de reglamentos']
+}
+
+Enum process_status {
+  OPEN                    [note: 'Investigación iniciada, en recolección de pruebas']
+  AWAITING_DEFENSE        [note: 'Notificado al EUI, esperando respuesta (10 días hábiles)']
+  IN_RESOLUTION           [note: 'Descargos recibidos, Lifehuni deliberando sanción']
+  APPEALED                [note: 'EUI recurrió ante el Comité Disciplinario Matriz (sec. 2.19)']
+  CLOSED                  [note: 'Proceso concluido con sanción firme o archivo']
+}
+
+Enum notification_type {
+  OPENING                 [note: 'Notificación de inicio de investigación al EUI']
+  SUMMONS                 [note: 'Convocatoria para presentar descargos o pruebas']
+  DECISION                [note: 'Comunicación de la resolución y sanción aplicada']
+  APPEAL_RESPONSE         [note: 'Respuesta al recurso de reposición presentado']
+  CLOSURE                 [note: 'Notificación de cierre definitivo del proceso']
+}
+
+Enum notification_channel {
+  PHYSICAL_MAIL           [note: 'Carta física enviada al domicilio registrado']
+  EMAIL                   [note: 'Correo electrónico al email registrado del EUI']
+  DATA_MESSAGE            [note: 'WhatsApp, SMS u otro medio de mensaje de datos']
+  IN_PERSON               [note: 'Notificación en oficina con firma de recibido']
+}
+
+Enum committee_review_status {
+  REQUESTED               [note: 'EUI radicó apelación por escrito al comité']
+  UNDER_REVIEW            [note: 'Comité revisando el caso, EUI suspendido mientras tanto']
+  DECIDED                 [note: 'Comité emitió decisión final']
+  ARCHIVED                [note: 'Solicitud archivada por vencimiento de términos']
+}
+
+Enum committee_decision {
+  CONFIRMED               [note: 'Comité confirma la sanción impuesta por Lifehuni']
+  MODIFIED                [note: 'Comité ajusta la sanción (aumenta o reduce)']
+  REVOKED                 [note: 'Comité revoca la sanción y restituye derechos del EUI']
+  CONTRACT_TERMINATED     [note: 'Comité confirma terminación definitiva del contrato']
+}
+
+Enum enforcement_type {
+  PARTIAL_SUSPENSION      [note: 'Restricciones específicas manteniendo el contrato activo']
+  FULL_SUSPENSION         [note: 'Todas las actividades del EUI bloqueadas']
+  TERMINATION             [note: 'Fin definitivo del contrato de vinculación']
+}
+
+Enum file_type {
+  PDF                     [note: 'Documento PDF (contratos, resoluciones, descargos)']
+  IMAGE                   [note: 'Fotografía o captura de pantalla']
+  VIDEO                   [note: 'Grabación de video como evidencia']
+  AUDIO                   [note: 'Grabación de audio como evidencia']
+  LINK                    [note: 'URL a contenido externo relevante']
+  OTHER                   [note: 'Cualquier otro formato de archivo']
+}
+
+
+// =====================================================================
+// ZONA 1: TABLAS EXISTENTES EN LA DB ACTUAL
+// No se modifican. El módulo de sanciones las referencia.
+// =====================================================================
+
+Table users [note: 'Empresarios Universales Independientes registrados en Lifehuni'] {
+  id                uuid              [pk, note: 'Identificador único del usuario']
+  eui_code          varchar           [unique, not null, note: 'Código único del EUI. Vence si no hay pedidos en 12 meses (sec. 2.1.3)']
+  full_name         varchar           [not null, note: 'Nombre completo del EUI']
+  email             varchar           [not null, note: 'Correo electrónico principal de contacto']
+  sponsor_id        uuid              [ref: > users.id, note: 'FK autorreferencia: EUI que patrocinó este registro']
+  plan_id           uuid              [ref: > plans.id, note: 'FK: Plan de negocio al que está vinculado el EUI']
+  code_status       eui_code_status   [not null, default: 'ACTIVE', note: 'Estado actual del código del EUI']
+  last_order_date   date              [note: 'Fecha del último pedido. Determina vigencia del código']
+}
+
+Table plans [note: 'Catálogo de planes de negocio disponibles en Lifehuni'] {
+  id          uuid      [pk, note: 'Identificador único del plan']
+  name        varchar   [not null, note: 'Nombre comercial del plan']
+  description text      [note: 'Condiciones y beneficios incluidos en el plan']
+}
+
+Table benefits [note: 'Beneficios asociados a cada plan contratado por el EUI'] {
+  id          uuid      [pk, note: 'Identificador único del beneficio']
+  plan_id     uuid      [not null, ref: > plans.id, note: 'FK: Plan al que pertenece este beneficio']
+  type        varchar   [note: 'Tipo: DISCOUNT | BONUS | INCENTIVE | AWARD']
+  description text      [note: 'Descripción detallada del beneficio otorgado']
+}
+
+
+// =====================================================================
+// ZONA 2: TABLAS PARAMÉTRICAS - MÓDULO SANCIONES
+// Catálogos configurables por el administrador.
+// Permiten ajustar el módulo sin cambiar código.
+// Referencia: secciones 2.17 y 2.18 del Manual del Empresario.
+// =====================================================================
+
+Table cat_offense_types [note: 'Clasifica la gravedad de la infracción cometida por el EUI (sec. 2.17.1 a 2.17.3)'] {
+  id          uuid            [pk, note: 'Identificador único del tipo de falta']
+  code        offense_level   [not null, note: 'Código de severidad: MINOR | MODERATE | SEVERE']
+  name        varchar         [not null, note: 'Nombre descriptivo de la falta']
+  description text            [note: 'Conductas que generan esta falta según el manual']
+  level       int             [not null, note: 'Nivel numérico: 1=Minor | 2=Moderate | 3=Severe']
+  is_active   boolean         [default: true, note: 'FALSE si el tipo fue descontinuado']
+}
+
+Table cat_sanction_types [note: 'Define las sanciones aplicables según reincidencia (sec. 2.17.1 a 2.17.3)'] {
+  id                    uuid            [pk, note: 'Identificador único del tipo de sanción']
+  code                  sanction_code   [not null, note: 'Código de la sanción aplicable']
+  name                  varchar         [not null, note: 'Nombre legible de la sanción']
+  description           text            [note: 'Alcance y efectos generales de la sanción']
+  first_offense_text    text            [note: 'Consecuencia en la primera reincidencia']
+  second_offense_text   text            [note: 'Consecuencia en la segunda reincidencia']
+  third_offense_text    text            [note: 'Consecuencia en la tercera reincidencia']
+  is_active             boolean         [default: true, note: 'FALSE si la sanción ya no está disponible']
+}
+
+Table cat_action_types [note: 'Acciones concretas que ejecuta Lifehuni como consecuencia de la sanción (sec. 2.18)'] {
+  id          uuid          [pk, note: 'Identificador único del tipo de acción']
+  code        action_code   [not null, note: 'Código de la acción disciplinaria']
+  name        varchar       [not null, note: 'Nombre legible de la acción disciplinaria']
+  description text          [note: 'Impacto operativo de aplicar esta acción al EUI']
+  is_active   boolean       [default: true, note: 'FALSE si la acción fue descontinuada']
+}
+
+Table cat_complaint_sources [note: 'Origen que da inicio a la investigación (sec. 2.17 párrafo inicial)'] {
+  id          uuid              [pk, note: 'Identificador único de la fuente']
+  code        complaint_source  [not null, note: 'Código del origen de la denuncia']
+  name        varchar           [not null, note: 'Nombre descriptivo de la fuente de la denuncia']
+  is_active   boolean           [default: true, note: 'FALSE si la fuente ya no está habilitada']
+}
+
+Table cat_mitigating_factors [note: 'Circunstancias que pueden reducir la sanción aplicada (sec. 2.17.5)'] {
+  id          uuid              [pk, note: 'Identificador único del atenuante']
+  code        mitigating_code   [not null, note: 'Código del atenuante reconocible']
+  description text              [not null, note: 'Descripción del atenuante y cómo reduce la sanción']
+  is_active   boolean           [default: true, note: 'FALSE si el atenuante ya no puede ser invocado']
+}
+
+Table cat_process_statuses [note: 'Estados por los que atraviesa una investigación disciplinaria'] {
+  id          uuid            [pk, note: 'Identificador único del estado']
+  code        process_status  [not null, note: 'Código del estado del proceso']
+  name        varchar         [not null, note: 'Nombre del estado visible en la interfaz']
+  is_active   boolean         [default: true, note: 'FALSE si el estado fue retirado del flujo']
+}
+
+
+// =====================================================================
+// ZONA 3: TABLAS TRANSACCIONALES - MÓDULO SANCIONES
+// Registran los hechos reales del proceso disciplinario.
+// Referencia: secciones 2.17 a 2.19 del Manual del Empresario.
+// =====================================================================
+
+Table investigations [note: 'Caso disciplinario raíz. Todo el proceso parte de aquí (sec. 2.17)'] {
+  id                    uuid      [pk, note: 'Identificador único del caso disciplinario']
+  eui_id                uuid      [not null, ref: > users.id, note: 'FK: EUI que está siendo investigado']
+  offense_type_id       uuid      [not null, ref: > cat_offense_types.id, note: 'FK: Clasificación de la falta (leve/moderada/grave)']
+  complaint_source_id   uuid      [not null, ref: > cat_complaint_sources.id, note: 'FK: Cómo llegó la información a Lifehuni']
+  process_status_id     uuid      [not null, ref: > cat_process_statuses.id, note: 'FK: Estado actual del proceso disciplinario']
+  instructor_id         uuid      [not null, ref: > users.id, note: 'FK: Usuario Lifehuni que instruye y gestiona el caso']
+  facts_description text      [note: 'Narración detallada de los hechos presuntamente infractores']
+  origin_detail     varchar   [note: 'Contexto o fuente adicional de información del caso']
+  opened_at         date      [not null, note: 'Fecha en que Lifehuni abre formalmente la investigación']
+  closed_at         date      [note: 'Fecha de cierre del proceso (null = en curso)']
+  offense_count     int       [not null, default: 1, note: 'Número de sanción del EUI. Determina la severidad de la pena']
+  is_active         boolean   [not null, default: true, note: 'FALSE si el caso fue archivado sin sanción']
+
+  indexes {
+    eui_id                        [name: 'idx_inv_eui', note: 'Buscar todos los casos de un EUI']
+    process_status_id             [name: 'idx_inv_status', note: 'Filtrar casos por estado actual']
+    offense_type_id               [name: 'idx_inv_offense', note: 'Consultar casos por tipo de falta']
+    instructor_id                 [name: 'idx_inv_instructor', note: 'Ver carga de trabajo por instructor']
+    (eui_id, is_active)           [name: 'idx_inv_eui_active', note: 'Casos activos de un EUI específico']
+    (eui_id, offense_count)       [name: 'idx_inv_recurrence', note: 'Determinar nivel de reincidencia del EUI']
+    opened_at                     [name: 'idx_inv_date', note: 'Ordenar y filtrar casos por fecha de apertura']
+  }
+}
+
+Table investigation_evidences [note: 'Documentos y archivos que soportan la investigación (de Lifehuni o del EUI)'] {
+  id                uuid        [pk, note: 'Identificador único de la evidencia']
+  investigation_id  uuid        [not null, ref: > investigations.id, note: 'FK: Caso disciplinario al que pertenece']
+  file_type         file_type   [note: 'Tipo de archivo adjuntado como evidencia']
+  file_url          text        [note: 'URL o ruta de almacenamiento del archivo']
+  description       text        [note: 'Contenido y relevancia de la evidencia en el caso']
+  uploaded_at       date        [not null, note: 'Fecha en que se adjuntó la evidencia al expediente']
+  uploaded_by_id    uuid        [ref: > users.id, note: 'FK: Usuario que subió la evidencia (Lifehuni o EUI)']
+
+  indexes {
+    investigation_id  [name: 'idx_evi_investigation', note: 'Obtener todas las evidencias de un caso']
+    uploaded_by_id    [name: 'idx_evi_user', note: 'Ver evidencias subidas por un usuario']
+  }
+}
+
+Table process_notifications [note: 'Registro de cada comunicación oficial enviada al EUI. Garantiza trazabilidad del debido proceso (sec. 2.17.4)'] {
+  id                  uuid                  [pk, note: 'Identificador único de la notificación']
+  investigation_id    uuid                  [not null, ref: > investigations.id, note: 'FK: Caso al que corresponde la notificación']
+  type                notification_type     [note: 'Tipo de notificación dentro del proceso']
+  channel             notification_channel  [note: 'Canal utilizado para enviar la notificación']
+  content             text                  [note: 'Texto completo del mensaje enviado al EUI']
+  sent_at             date                  [not null, note: 'Fecha en que se realizó el envío']
+  receipt_confirmed   boolean               [not null, default: false, note: 'TRUE si el EUI confirmó recepción']
+  sent_by_id          uuid                  [ref: > users.id, note: 'FK: Usuario Lifehuni que generó y envió la notificación']
+
+  indexes {
+    investigation_id            [name: 'idx_notif_investigation', note: 'Ver todas las notificaciones de un caso']
+    (investigation_id, type)    [name: 'idx_notif_type', note: 'Verificar si ya se envió un tipo específico de notificación']
+    receipt_confirmed           [name: 'idx_notif_pending', note: 'Listar notificaciones sin confirmar recepción']
+  }
+}
+
+Table eui_defenses [note: 'Respuesta formal del EUI al proceso. Ejercicio del derecho a descargos (sec. 2.17.4)'] {
+  id                uuid    [pk, note: 'Identificador único del descargo']
+  investigation_id  uuid    [not null, ref: > investigations.id, note: 'FK: Caso al que responde el EUI']
+  defense_text      text    [note: 'Texto de los descargos presentados por el EUI']
+  document_url      text    [note: 'URL del documento formal firmado de descargos (si aplica)']
+  submitted_at      date    [note: 'Fecha en que el EUI radicó sus descargos']
+  has_evidence      boolean [not null, default: false, note: 'TRUE si el EUI adjuntó pruebas con sus descargos']
+
+  indexes {
+    investigation_id  [name: 'idx_def_investigation', note: 'Obtener descargos de un caso específico']
+  }
+}
+
+Table sanction_resolutions [note: 'Decisión formal de Lifehuni sobre el caso disciplinario (sec. 2.18.10)'] {
+  id                  uuid            [pk, note: 'Identificador único de la resolución']
+  investigation_id    uuid            [not null, ref: > investigations.id, note: 'FK: Caso que origina esta resolución']
+  sanction_type_id    uuid            [not null, ref: > cat_sanction_types.id, note: 'FK: Tipo de sanción (según falta y reincidencia)']
+  action_type_id      uuid            [not null, ref: > cat_action_types.id, note: 'FK: Acción concreta que se ejecutará sobre el EUI']
+  resolution_text     text            [note: 'Texto completo de la resolución motivada y firmada']
+  resolved_at         date            [not null, note: 'Fecha en que Lifehuni emite y notifica la resolución']
+  effect_start_date   date            [note: 'Fecha desde la cual la sanción tiene efecto']
+  effect_end_date     date            [note: 'Fecha en que la sanción expira (null = indefinida)']
+  is_appealable       boolean         [not null, default: true, note: 'TRUE si el EUI puede recurrir ante el Comité (sec. 2.19)']
+  resolved_by_id      uuid            [ref: > users.id, note: 'FK: Usuario Lifehuni que firma y emite la resolución']
+
+  indexes {
+    investigation_id              [name: 'idx_res_investigation', note: 'Obtener la resolución de un caso']
+    sanction_type_id              [name: 'idx_res_sanction', note: 'Estadísticas por tipo de sanción aplicada']
+    resolved_by_id                [name: 'idx_res_instructor', note: 'Resoluciones emitidas por cada instructor']
+    resolved_at                   [name: 'idx_res_date', note: 'Filtrar resoluciones por rango de fechas']
+    (effect_start_date, effect_end_date) [name: 'idx_res_validity', note: 'Consultar sanciones vigentes en un período']
+  }
+}
+
+Table applied_mitigating_factors [note: 'Atenuantes reconocidos en el caso para reducir la sanción (sec. 2.17.5)'] {
+  id                    uuid  [pk, note: 'Identificador único del registro']
+  investigation_id      uuid  [not null, ref: > investigations.id, note: 'FK: Caso donde se reconoce el atenuante']
+  mitigating_factor_id  uuid  [not null, ref: > cat_mitigating_factors.id, note: 'FK: Tipo de atenuante reconocido']
+  justification         text  [note: 'Justificación de por qué aplica este atenuante al caso concreto']
+
+  indexes {
+    investigation_id      [name: 'idx_mit_investigation', note: 'Ver atenuantes aplicados a un caso']
+    mitigating_factor_id  [name: 'idx_mit_type', note: 'Frecuencia de uso de cada atenuante']
+  }
+}
+
+Table sanction_enforcements [note: 'Efectos operativos concretos activados con la sanción (sec. 2.18.4 a 2.18.6)'] {
+  id                      uuid              [pk, note: 'Identificador único del efecto']
+  resolution_id           uuid              [not null, ref: > sanction_resolutions.id, note: 'FK: Resolución que origina estos efectos']
+  enforcement_type        enforcement_type  [not null, note: 'Categoría general del efecto de la sanción']
+  suspend_multilevel      boolean           [not null, default: false, note: 'TRUE: bloquea representación en red multinivel']
+  freeze_earnings         boolean           [not null, default: false, note: 'TRUE: retiene utilidades, bonos, incentivos y calificaciones']
+  block_orders            boolean           [not null, default: false, note: 'TRUE: impide al EUI realizar nuevos pedidos']
+  block_qualification     boolean           [not null, default: false, note: 'TRUE: suspende avance en rangos y títulos']
+  terminate_contract      boolean           [not null, default: false, note: 'TRUE: termina definitivamente el contrato de vinculación']
+  applied_at              date              [note: 'Fecha en que los efectos se activan en el sistema']
+  lifted_at               date              [note: 'Fecha en que los efectos se levantan (null = vigente)']
+
+  indexes {
+    resolution_id               [name: 'idx_enf_resolution', note: 'Obtener efectos de una resolución']
+    (applied_at, lifted_at)     [name: 'idx_enf_validity', note: 'Efectos activos en un momento dado']
+    terminate_contract          [name: 'idx_enf_terminations', note: 'Listar contratos en proceso de terminación']
+  }
+}
+
+Table committee_reviews [note: 'Apelación ante el Comité Disciplinario Matriz (sec. 2.19). EUI tiene 6 meses para solicitar revisión'] {
+  id                    uuid                      [pk, note: 'Identificador único de la revisión']
+  investigation_id      uuid                      [not null, ref: > investigations.id, note: 'FK: Caso disciplinario objeto de la revisión']
+  review_status         committee_review_status   [not null, note: 'Estado actual de la apelación ante el comité']
+  requested_at          date                      [not null, note: 'Fecha en que el EUI radicó la apelación por escrito']
+  decided_at            date                      [note: 'Fecha en que el comité emitió su decisión final']
+  decision              committee_decision        [note: 'Decisión final del comité disciplinario']
+  decision_description  text                      [note: 'Texto completo de la decisión del comité']
+  requested_by_id       uuid                      [ref: > users.id, note: 'FK: EUI que presentó la solicitud de revisión']
+
+  indexes {
+    investigation_id    [name: 'idx_com_investigation', note: 'Verificar si un caso tiene apelación activa']
+    review_status       [name: 'idx_com_status', note: 'Listar apelaciones por estado']
+    requested_by_id     [name: 'idx_com_eui', note: 'Ver apelaciones de un EUI específico']
+    requested_at        [name: 'idx_com_date', note: 'Controlar el plazo de 6 meses para apelar (sec. 2.19)']
+  }
+}
+
+Table eui_status_logs [note: 'Auditoría completa de cambios de estado del EUI generados por sanciones'] {
+  id                uuid              [pk, note: 'Identificador único del registro de auditoría']
+  eui_id            uuid              [not null, ref: > users.id, note: 'FK: EUI cuyo estado cambió']
+  investigation_id  uuid              [ref: > investigations.id, note: 'FK: Caso que originó el cambio de estado']
+  resolution_id     uuid              [ref: > sanction_resolutions.id, note: 'FK: Resolución que formalizó el cambio (null si es automático)']
+  previous_status   eui_code_status   [not null, note: 'Estado previo del EUI antes del cambio']
+  new_status        eui_code_status   [not null, note: 'Estado nuevo asignado al EUI tras la sanción']
+  changed_at        timestamp         [not null, note: 'Fecha y hora exacta en que ocurrió el cambio de estado']
+  changed_by_id     uuid              [ref: > users.id, note: 'FK: Usuario del sistema que ejecutó el cambio']
+
+  indexes {
+    eui_id                    [name: 'idx_log_eui', note: 'Línea de tiempo disciplinaria de un EUI']
+    investigation_id          [name: 'idx_log_investigation', note: 'Cambios de estado asociados a un caso']
+    (eui_id, changed_at)      [name: 'idx_log_eui_date', note: 'Historial cronológico de un EUI']
+    changed_at                [name: 'idx_log_date', note: 'Auditoría general por rango de fechas']
+  }
+}
+
+
+// =====================================================================
+// GRUPOS VISUALES
+// =====================================================================
+
+TableGroup existing [color: #7f8c8d] {
+  users
+  plans
+  benefits
+}
+
+TableGroup parametric [color: #2ecc71] {
+  cat_offense_types
+  cat_sanction_types
+  cat_action_types
+  cat_complaint_sources
+  cat_mitigating_factors
+  cat_process_statuses
+}
+
+TableGroup transactional [color: #3498db] {
+  investigations
+  investigation_evidences
+  process_notifications
+  eui_defenses
+  sanction_resolutions
+  applied_mitigating_factors
+  sanction_enforcements
+  committee_reviews
+  eui_status_logs
+}

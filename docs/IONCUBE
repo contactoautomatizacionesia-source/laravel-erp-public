@@ -1,0 +1,19 @@
+## NUEVA LIBRERÍA PARA MAQUETAR PDFS A PARTIR DE BLADE
+
+Se ha aprovechado la integración de **Node** en el proyecto para incluir una librería de esta tecnología conocida como **Puppeter** para construcción de PDFs con una alta fidelidad de CSS.
+
+Se hicieron pruebas con otras librerías propias de PHP como **mPDF** y **wkhtmltopdf** pero estas dejaban resultados con mala calidad.
+
+Se requieren hacer ciertas cosas para asegurar que esta librería funcione bien en sus proyectos locales.
+
+**1.** Asegurar que están ejecutando el proyecto en la versión **PHP 8.3.x**
+**2.** Asegurar que tienen instalado correctamente [**Ioncube VC16**](<https://www.ioncube.com/loaders.php>)
+```
+- Descargue el Loader desde https://get-loader.ioncube.com seleccionando Windows > VC16 > Windows VC16 (64 bits) > zip
+- Extraer el ZIP y copiar el archivo ioncube_loader_win_8.3.dll a la carpeta C:\laragon\bin\php\php-8.3.14-Win32-vs16-x64\ext
+- Ingresar al archivo php.ini y buscar la linea ;zend_extension y cambiarla por zend_extension=ioncube_loader_win_8.3.dll
+- Reiniciar Laragon
+```
+**3.** En la terminal de Laragon, ejecutar el siguiente comando: `composer require spatie/browsershot`
+**4.** En la misma terminal, ejecutar: `npm install puppeteer`
+**5.** Reiniciar Laragon

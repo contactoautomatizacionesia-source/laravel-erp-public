@@ -1,0 +1,13 @@
+{
+    "name": "InventoryExit",
+    "alias": "inventoryexit",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\InventoryExit\\Providers\\InventoryExitServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

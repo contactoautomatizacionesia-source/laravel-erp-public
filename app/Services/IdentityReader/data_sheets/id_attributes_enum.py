@@ -1,0 +1,16 @@
+from enum import Enum
+
+class IdAttributesEnum(Enum):
+    NOMBRES = "NOMBRES"
+    APELLIDOS = "APELLIDOS"
+    NUIP = "NUIP"
+    ESTATURA = "ESTATURA"
+    SEXO = "SEXO"
+    FECHA = "FECHA"
+    LUGAR = "LUGAR"
+    NACIMIENTO = "NACIMIENTO"
+    EXPEDICION = "EXPEDICION"
+    EXPIRACION = "EXPIRACION"
+    NUMERO = "NUMERO"
+    CIUDADANIA = "CIUDADANIA"
+    CEDULA = "CEDULA"

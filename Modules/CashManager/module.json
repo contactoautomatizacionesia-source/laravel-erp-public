@@ -1,0 +1,13 @@
+{
+    "name": "CashManager",
+    "alias": "cashmanager",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CashManager\\Providers\\CashManagerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

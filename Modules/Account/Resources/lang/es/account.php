@@ -1,0 +1,23 @@
+<?php  
+return [
+   'Account'=>'Cuenta',
+   'Chart Of Accounts'=>'Plan de Cuentas',
+   'Bank Accounts'=>'Cuentas Bancarias',
+   'Incomes'=>'Ingresos',
+   'Expenses'=>'Gastos',
+   'Parent Account'=>'Cuenta Padre',
+   'Name'=>'Nombre',
+   'Code'=>'Código',
+   'Type'=>'Tipo',
+   'Description'=>'Descripción',
+   'Default for'=>'Predeterminado para',
+   'Amount'=>'Monto',
+   'Transaction date'=>'Fecha de transacción',
+   'Opening Balance'=>'Saldo Inicial',
+   'Balance'=>'Saldo',
+   'Profit'=>'Ganancia',
+   'From The Beginning'=>'Desde el Inicio',
+   'GST/TAX/VAT'=>'IVA / Impuestos',
+   'Main Income Account'=>'Cuenta Principal de Ingresos',
+   'Total Product Wise Tax'=>'Total Impuestos por Producto',
+];

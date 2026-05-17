@@ -1,0 +1,23 @@
+<?php return [
+'pincode' => 'Código Postal',
+'city' => 'Ciudad',
+'state' => 'Estado/Departamento',
+'delivery_days' => 'Días de Entrega',
+'pincode_list' => 'Lista de Códigos Postales',
+'add_new_pincode' => 'Agregar Nuevo Código Postal',
+'delete_pincode' => 'Eliminar Código Postal',
+'created_at' => 'Creado En',
+'create_new_pincode' => 'Crear Nuevo Código Postal',
+'edit_pincode' => 'Editar Código Postal',
+'checkpincode_config' => 'Configuración de Verificación de Código Postal',
+'pincode_config' => 'Configuración de Código Postal',
+'pincode_check_system_status' => 'Sistema de Verificación de Código Postal',
+'delivery_days_status' => 'Mostrar Días de Entrega',
+'bulk_pincode_upload' => 'Carga Masiva de Códigos Postales',
+'bulk_upload' => 'Carga Masiva de Códigos Postales',
+'check_pincode' => 'Código Postal',
+'check' => 'VERIFICAR',
+'available_at' => 'Disponible en',
+'oops_we_are_not_currently_servicing_your_area' => '¡Lo sentimos! Actualmente no damos servicio en su área',
+
+];

@@ -1,0 +1,42 @@
+name: "Reporte de Cambio Técnico"
+description: "Usa esta plantilla para cambios técnicos como correcciones, nuevas funcionalidades, tareas de infraestructura o refactorizaciones. Asegúrate de proporcionar detalles claros y seguir las validaciones técnicas para facilitar la revisión."
+title: "[TIPO]: Breve descripción del cambio"
+body:
+  - type: markdown
+    attributes:
+      value: "### 📝 Detalles del Cambio"
+  - type: dropdown
+    id: type
+    attributes:
+      label: Tipo de Cambio
+      options:
+        - "Fix (Corrección)"
+        - "Feature (Nueva Funcionalidad)"
+        - "Infra/DevOps (Jenkins/AWS)"
+        - "Refactor (Limpieza de código)"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: ¿Qué hace este cambio?
+      placeholder: "Ej: Se crean nuevas funcionalidades para el módulo de usuarios."
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Validación Técnica
+      options:
+        - label: "He ejecutado `php artisan optimize:clear` localmente."
+          required: true
+        - label: "El cambio fue probado en el entorno de local."
+          required: true
+        - label: "He revisado que no haya errores de sintaxis o de lógica."
+          required: true
+        - label: "He actualizado la documentación si es necesario."
+          required: true
+        - label: "He agregado pruebas unitarias o de integración si es necesario."
+          required: true
+        - label: "He verificado que el cambio no afecta otras funcionalidades."
+          required: true

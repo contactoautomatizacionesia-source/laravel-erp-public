@@ -1,0 +1,69 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# IDE / Editor
+.vscode
+.idea
+.sonarlint
+.claude
+*.code-workspace
+
+# GitHub / CI config (no pertenece al runtime)
+.github
+
+# CI/CD
+.scannerwork
+Jenkinsfile
+sonar-project.properties
+
+# Documentation
+docs/
+README.md
+TESTING.md
+*.md
+
+# Tests
+tests/
+phpunit.xml
+phpunit.dusk.xml
+coverage.xml
+
+# Node (se instala en build stage)
+node_modules/
+
+# Vendor (se instala en build stage)
+vendor/
+
+# Environment (nunca se bake en la imagen)
+.env
+.env.*
+!.env.example
+
+# Storage volátil (montado como volumen)
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/app/*
+!storage/app/.gitignore
+
+# Archivos dinámicos de usuario (montados como volumen via STORAGE_BASE)
+public/uploads/*
+!public/uploads/.gitkeep
+public/carrier/*
+!public/carrier/.gitkeep
+public/invoice/*
+!public/invoice/.gitkeep
+public/database-backup/*
+!public/database-backup/.gitkeep
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Docker (no copiar compose ni dockerignore, pero sí docker/ para COPY)
+docker-compose*.yml
+Dockerfile
+.dockerignore

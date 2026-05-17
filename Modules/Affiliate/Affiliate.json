@@ -1,0 +1,35 @@
+{
+    "Affiliate": {
+        "item_id": "36519560",
+        "migration": [
+            "2021_12_05_131251_create_affiliate_module_permission_table.php",
+            "2021_12_05_141246_create_affiliate_links_table.php",
+            "2021_12_06_102647_create_affiliate_link_visit_track_users_table.php",
+            "2021_12_19_121253_create_affiliate_referral_users_table.php",
+            "2021_12_06_130347_create_affiliate_configurations_table.php",
+            "2021_12_06_173303_create_affiliate_referral_payments_table.php",
+            "2021_12_07_100911_create_affiliate_user_wallets_table.php",
+            "2021_12_07_152509_create_affiliate_withdraws_table.php",
+            "2021_12_19_172520_add_affiliate_module_user_info_table.php",
+            "2021_12_20_123308_create_affiliate_category_commissions_table.php",
+            "2022_01_04_164053_add_affiliate_page_to_dynamic_page_table.php",
+            "2022_06_03_101649_convert_affiliate_role_customer.php",
+            "2022_06_03_170630_relation_build_affiliate_to_order.php",
+            "2022_06_08_190913_add_new_permissions_for_user_details_block_user.php",
+            "2022_09_01_172539_backend_menu_affiliate.php"
+        ],
+        "names": [
+
+        ],
+        "versions": [
+            "2.0"
+        ],
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "min_system_version":"3.8",
+        "notes": [
+            "This is Affiliate module for Amazcart. Thanks for using. Amazcrt version required 3.8"
+        ]
+    }
+}

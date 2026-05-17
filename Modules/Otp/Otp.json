@@ -1,0 +1,26 @@
+{
+    "Otp": {
+        "item_id": "35319249",
+	"migration": [
+            "2021_11_26_140754_create_otp_configurations_table.php",
+            "2021_12_18_190912_add_permission_sidebar_for_otp.php",
+            "2022_01_19_114051_add_verified_field_to_otp_configuration_table.php",
+            "2022_01_19_191226_add_template_for_user_login_otp.php",
+            "2022_09_02_101545_backend_menu_otp.php"
+        ],
+        "names": [
+            
+        ],
+        "versions": [
+            "1.4"
+        ],
+        "min_system_version":"3.8",
+         "verifier" : "auth",
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is OTP Module for User Registration, Seller Registration(for multivendor), Oder Confirm(COD). Minimum Amazcart version is 3.8"
+        ]
+    }
+}

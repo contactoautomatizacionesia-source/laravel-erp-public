@@ -1,0 +1,13 @@
+{
+    "name": "WholeSale",
+    "alias": "wholesale",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\WholeSale\\Providers\\WholeSaleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

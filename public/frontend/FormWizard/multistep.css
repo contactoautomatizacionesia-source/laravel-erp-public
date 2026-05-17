@@ -1,0 +1,114 @@
+.multistep-indicator {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 24px;
+    justify-content: center;
+}
+
+@media screen and (max-width:767px) {
+    .multistep-indicator{
+        justify-content: start;
+    }
+}
+
+.multistep-indicator__step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: .8;
+    font-weight: 500;
+    transition: all .2s ease;
+    cursor: pointer;
+}
+
+.multistep-indicator__step.active {
+    opacity: 1;
+    color: var(--base_color);
+}
+
+.multistep-indicator__step.active .step-number {
+    background-color: var(--base_color);
+    color: var(--text_white);
+}
+
+.multistep-indicator__step.completed {
+    opacity: 1;
+    color: #28a745;
+}
+
+.step-number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--base_color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+
+.step-label{
+    line-height: 1.1em;
+}
+
+@media screen and (max-width:767px){
+    .multistep-indicator__step{
+        flex-direction: column;
+    }
+    .step-label{
+        text-align: center;
+    }
+}
+
+.navigate-multi-step-prev,.navigate-multi-step-next{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: var(--base_color);
+    /* letter-spacing: 1px; */
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.1em;
+    padding: 10px 25px;
+    outline: none !important;
+    text-align: center;
+    cursor: pointer;
+    /* text-transform: uppercase; */
+    border: 2px solid var(--base_color);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.4sease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+ .navigate-multi-step-submit{
+    display: flex;
+    align-items: center;
+    background-color: var(--base_color);
+    color: var(--text_white);
+    /* letter-spacing: 1px; */
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.1em;
+    padding: 10px 45px;
+    outline: none !important;
+    text-align: center;
+    cursor: pointer;
+    /* text-transform: uppercase; */
+    border: 2px solid var(--base_color);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    -webkit-transition: all 0.4sease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+

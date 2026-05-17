@@ -1,0 +1,89 @@
+<?php
+
+namespace Tests\Browser\Modules\GeneralSetting;
+
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Laravel\Dusk\Browser;
+use Tests\DuskTestCase;
+
+class AnalyticsToolSetupTest extends DuskTestCase
+{
+    /**
+     * A Dusk test example.
+     *
+     * @return void
+     */
+    public function test_for_visit_index_page()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->loginAs(1)
+                ->visit('/generalsetting/analytics')
+                ->assertSee('Google Analytics');
+        });
+    }
+
+    public function test_for_validate_check_goggle_analytics(){
+        $this->test_for_visit_index_page();
+        $this->browse(function (Browser $browser) {
+            $browser->click('#google_analytics_form > div > div > div.col-xl-12 > div > ul > li:nth-child(1) > label > span')
+                ->type('#tracking_id', '')
+                ->click('#google_analytics_form > div > div > div:nth-child(6) > div > ul > li > label > span')
+                ->pause(1000)
+                ->type('#tracking_id', '')
+                ->click('#google_submit_btn')
+                ->assertPathIs('/generalsetting/analytics')
+                ->assertSeeIn('#google_analytics_form > div > div > div:nth-child(4) > div > span', 'The a n a l y t i c s t r a c k i n g i d field is required.')
+                ->assertSeeIn('#google_analytics_form > div > div > div.col-lg-12.analytics_view_div > div > span', 'The a n a l y t i c s v i e w i d field is required.');
+        });
+    }
+
+    public function test_for_google_analytics_update(){
+        $this->test_for_visit_index_page();
+        $this->browse(function (Browser $browser) {
+            $browser->click('#google_analytics_form > div > div > div.col-xl-12 > div > ul > li:nth-child(1) > label > span')
+                ->type('#tracking_id', 'UA-TEST-TRACKING-ID')
+                ->click('#google_analytics_form > div > div > div:nth-child(6) > div > ul > li > label > span')
+                ->pause(1000)
+                ->type('#google_analytics_form > div > div > div.col-lg-12.analytics_view_div > div > input', '245178355')
+                ->attach('#json', __DIR__.'/files/google_analytics.json')
+                ->click('#google_submit_btn')
+                ->assertPathIs('/generalsetting/analytics')
+                ->waitFor('.toast-message',25)
+                ->assertSeeIn('.toast-message', 'Updated successfully!');
+        });
+    }
+
+    public function test_for_without_show_dashboard_update_google_analytics(){
+        $this->test_for_visit_index_page();
+        $this->browse(function (Browser $browser) {
+            $browser->click('#google_analytics_form > div > div > div.col-xl-12 > div > ul > li:nth-child(1) > label > span')
+                ->type('#tracking_id', 'UA-TEST-TRACKING-ID')
+                ->click('#google_submit_btn')
+                ->assertPathIs('/generalsetting/analytics')
+                ->waitFor('.toast-message',25)
+                ->assertSeeIn('.toast-message', 'Updated successfully!');
+        });
+    }
+
+    public function test_for_validate_facebook_pixel(){
+        $this->test_for_visit_index_page();
+        $this->browse(function (Browser $browser) {
+            $browser->type('#facebook_pixel_id', '')
+                ->click('#facebook_submit_btn')
+                ->waitFor('.toast-message',25)
+                ->assertSeeIn('.toast-message', 'Facebook Pixel ID Required');
+        });
+    }
+
+    public function test_for_facebook_pixel_update(){
+        $this->test_for_visit_index_page();
+        $this->browse(function (Browser $browser) {
+            $browser->click('#facebook_pixel_form > div > div > div.col-xl-6 > div > ul > li > label > span')
+                ->type('#facebook_pixel_id', '24544178355')
+                ->click('#facebook_submit_btn')
+                ->waitFor('.toast-message',25)
+                ->assertSeeIn('.toast-message', 'Updated successfully!');
+        });
+    }
+
+}

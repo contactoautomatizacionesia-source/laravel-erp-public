@@ -1,0 +1,13 @@
+{
+    "name": "Affiliate",
+    "alias": "affiliate",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Affiliate\\Providers\\AffiliateServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

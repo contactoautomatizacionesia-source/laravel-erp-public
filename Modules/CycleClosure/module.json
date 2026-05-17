@@ -1,0 +1,13 @@
+{
+    "name": "CycleClosure",
+    "alias": "cycleclosure",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CycleClosure\\Providers\\CycleClosureServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

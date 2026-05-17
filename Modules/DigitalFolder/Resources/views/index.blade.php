@@ -1,0 +1,1 @@
+@include('digitalfolder::admin.index')

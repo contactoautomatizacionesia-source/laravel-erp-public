@@ -1,0 +1,185 @@
+.inventory-alert-modal .modal-title {
+    font-weight: 600;
+}
+
+.inventory-alert-modal .alert-card {
+    border: 1px solid #e8edf3;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 16px;
+}
+
+.inventory-alert-modal .alert-state-banner {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .02em;
+}
+
+.inventory-alert-modal .alert-state-banner.is-overstock {
+    color: #b03052;
+    background: #fbe9ef;
+    border: 1px solid #f2cad7;
+}
+
+.inventory-alert-modal .alert-state-banner.is-lowstock {
+    color: #0d5f78;
+    background: #e8f7fc;
+    border: 1px solid #bfe8f5;
+}
+
+.inventory-alert-modal .alert-product-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.inventory-alert-modal .alert-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #7b8794;
+    margin-bottom: 0;
+}
+
+.inventory-alert-modal .meta-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7b8794;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.inventory-alert-modal .sku-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.inventory-alert-modal .sku-badges .badge {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 10px;
+}
+
+.inventory-alert-modal .stock-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.inventory-alert-modal .stock-box {
+    border: 1px solid #e8edf3;
+    border-radius: 8px;
+    background: #fff;
+    padding: 12px;
+}
+
+.inventory-alert-modal .stock-value {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+@media (max-width: 575px) {
+    .inventory-alert-modal .stock-metrics {
+        grid-template-columns: 1fr;
+    }
+}
+
+.unread-row {
+    background-color: rgba(240, 248, 255, 0.7) !important;
+    /* Azul muy tenue */
+    font-weight: 500;
+}
+
+.read-row {
+    opacity: 0.8;
+}
+
+.inventory-alerts-table td {
+    vertical-align: middle;
+}
+
+.inventory-alerts-table .cell-date {
+    min-width: 130px;
+    font-weight: 600;
+    color: #3f4b5b;
+}
+
+.inventory-alerts-table .cell-name {
+    min-width: 200px;
+}
+
+.inventory-alerts-table .product-name {
+    display: block;
+    font-weight: 600;
+    color: #2d3748;
+    line-height: 1.35;
+}
+
+.inventory-alerts-table .sku-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 250px;
+}
+
+.inventory-alerts-table .sku-wrap .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 9px;
+    background-color: var(--toolkit_secondary-gray-color);
+}
+
+.inventory-alerts-table .alert-pill {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    padding: 7px 10px;
+    border-radius: 999px;
+}
+
+.inventory-alerts-table .stock-card {
+    background: #f8fafc;
+    border: 1px solid #e7edf5;
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-width: 165px;
+}
+
+.inventory-alerts-table .stock-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.inventory-alerts-table .stock-row+.stock-row {
+    margin-top: 4px;
+}
+
+.inventory-alerts-table .stock-label {
+    color: #7b8794;
+    font-weight: 600;
+}
+
+.inventory-alerts-table .stock-value {
+    font-weight: 700;
+    color: var(--toolkit_premium-dark-color);
+}
+
+.inventory-alerts-table .stock-value.current-low {
+    color: var(--toolkit_cromatic-blue-color);
+}
+
+.inventory-alerts-table .stock-value.current-high {
+    color: var(--toolkit_corporative-red-color);
+}

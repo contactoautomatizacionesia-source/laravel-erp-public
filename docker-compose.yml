@@ -1,0 +1,178 @@
+# =============================================================================
+# docker-compose.yml — amazingsite-erp
+# BD externa (MySQL no incluido). Redis local para cache/queue/session.
+#
+# Variables controladas desde .env:
+#   APP_IMAGE      Imagen PHP-FPM (default: amazingsite-erp-app:latest)
+#                  Server: ghcr.io/daruinherreraigniweb/amazingsite-erp:latest
+#   NGINX_IMAGE    Imagen Nginx   (default: amazingsite-erp-nginx:latest)
+#                  Server: ghcr.io/daruinherreraigniweb/amazingsite-erp:nginx-latest
+#   STORAGE_BASE   Ruta raíz de archivos dinámicos
+#                  Local/dev:  STORAGE_BASE=.
+#                  Nube/prod:  STORAGE_BASE=/www/data-projects/amazingsite
+#   APP_PORT       Puerto expuesto (default: 80)
+#
+# Uso local:
+#   docker compose build                # construir imágenes
+#   docker compose up -d                # levantar todo
+# Uso servidor (imágenes desde GHCR):
+#   docker compose pull                 # descargar imágenes
+#   docker compose up -d                # levantar todo
+# =============================================================================
+
+services:
+  # ── Nginx (reverse proxy + archivos estáticos) ────────────────────────────
+  nginx:
+    image: ${NGINX_IMAGE:-amazingsite-erp-nginx:latest}
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME:-amazingsite}-nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-80}:80"
+    volumes:
+      # Archivos dinámicos desde STORAGE_BASE (overlays sobre la imagen)
+      - ${STORAGE_BASE:-.}/storage/app:/var/www/storage/app:ro
+      - ${STORAGE_BASE:-.}/public/uploads:/var/www/public/uploads:ro
+      - ${STORAGE_BASE:-.}/public/carrier:/var/www/public/carrier:ro
+      - ${STORAGE_BASE:-.}/public/invoice:/var/www/public/invoice:ro
+    depends_on:
+      app:
+        condition: service_started
+    networks:
+      - amazingsite
+
+  # ── PHP-FPM (app principal) ───────────────────────────────────────────────
+  app:
+    image: ${APP_IMAGE:-amazingsite-erp-app:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: ${COMPOSE_PROJECT_NAME:-amazingsite}-app
+    restart: unless-stopped
+    command: ["php-fpm"]
+    env_file:
+      - .env
+      - .env.docker
+    environment:
+      - CONTAINER_ROLE=app
+    volumes:
+      - ./.env:/var/www/.env
+      - ${STORAGE_BASE:-.}/storage/app:/var/www/storage/app
+      - ${STORAGE_BASE:-.}/storage/logs:/var/www/storage/logs
+      - ${STORAGE_BASE:-.}/storage/framework:/var/www/storage/framework
+      - ${STORAGE_BASE:-.}/bootstrap/cache:/var/www/bootstrap/cache
+      - ${STORAGE_BASE:-.}/public/uploads:/var/www/public/uploads
+      - ${STORAGE_BASE:-.}/public/carrier:/var/www/public/carrier
+      - ${STORAGE_BASE:-.}/public/invoice:/var/www/public/invoice
+      - ${STORAGE_BASE:-.}/public/database-backup:/var/www/public/database-backup
+    depends_on:
+      redis:
+        condition: service_healthy
+    # Chrome (Browsershot) necesita syscalls que Docker bloquea por defecto
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - amazingsite
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # ── Queue Worker ──────────────────────────────────────────────────────────
+  worker:
+    image: ${APP_IMAGE:-amazingsite-erp-app:latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-amazingsite}-worker
+    restart: unless-stopped
+    command: ["worker"]
+    env_file:
+      - .env
+      - .env.docker
+    environment:
+      - CONTAINER_ROLE=worker
+    volumes:
+      - ./.env:/var/www/.env
+      - ${STORAGE_BASE:-.}/storage/app:/var/www/storage/app
+      - ${STORAGE_BASE:-.}/storage/logs:/var/www/storage/logs
+      - ${STORAGE_BASE:-.}/storage/framework:/var/www/storage/framework
+      - ${STORAGE_BASE:-.}/public/uploads:/var/www/public/uploads
+      - ${STORAGE_BASE:-.}/public/carrier:/var/www/public/carrier
+      - ${STORAGE_BASE:-.}/public/invoice:/var/www/public/invoice
+    depends_on:
+      app:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    # Chrome (Browsershot) puede ejecutarse desde jobs de queue
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - amazingsite
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # Escalar horizontalmente: docker compose up -d --scale worker=3
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+  # ── Scheduler (cron) ──────────────────────────────────────────────────────
+  scheduler:
+    image: ${APP_IMAGE:-amazingsite-erp-app:latest}
+    container_name: ${COMPOSE_PROJECT_NAME:-amazingsite}-scheduler
+    restart: unless-stopped
+    command: ["scheduler"]
+    env_file:
+      - .env
+      - .env.docker
+    environment:
+      - CONTAINER_ROLE=scheduler
+    volumes:
+      - ./.env:/var/www/.env
+      - ${STORAGE_BASE:-.}/storage/app:/var/www/storage/app
+      - ${STORAGE_BASE:-.}/storage/logs:/var/www/storage/logs
+      - ${STORAGE_BASE:-.}/storage/framework:/var/www/storage/framework
+      - ${STORAGE_BASE:-.}/public/uploads:/var/www/public/uploads
+      - ${STORAGE_BASE:-.}/public/carrier:/var/www/public/carrier
+      - ${STORAGE_BASE:-.}/public/invoice:/var/www/public/invoice
+    depends_on:
+      app:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - amazingsite
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ── Redis (cache + queue + session) ───────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-amazingsite}-redis
+    restart: unless-stopped
+    command: ["redis-server", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks:
+      - amazingsite
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+# ── Volumes ────────────────────────────────────────────────────────────────
+# Archivos dinámicos (uploads, logs, invoices, backups) usan bind mounts
+# controlados por STORAGE_BASE (ver .env). Solo Redis usa named volume.
+volumes:
+  redis_data:
+    driver: local
+
+# ── Network ────────────────────────────────────────────────────────────────
+networks:
+  amazingsite:
+    driver: bridge

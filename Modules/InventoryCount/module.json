@@ -1,0 +1,13 @@
+{
+    "name": "InventoryCount",
+    "alias": "inventorycount",
+    "description": "Módulo de Conteo de Inventario por Centro de Costo",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\InventoryCount\\Providers\\InventoryCountServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -1,0 +1,19 @@
+{
+    "WholeSale": {
+        "item_id": "40188803",
+        "migration": [
+            "2022_07_05_151639_create_wholesale_prices_table.php"
+        ],
+        "names": [],
+        "versions": [
+            "1.4"
+        ],
+        "min_system_version":"3.8",
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is WholeSale module for Amazcart. Thanks for using. Amazcrt version required 3.8"
+        ]
+    }
+}

@@ -1,0 +1,483 @@
+/* ==========================================================================
+   Variables de Color (Toolkit Colors)
+   ========================================================================== */
+:root {
+    --bg-light: #f8f9fa;
+    --border-light: #e0e4e8;
+}
+
+/* ==========================================================================
+   Contenedor Principal (Panel Izquierdo / Derecho)
+   ========================================================================== */
+.ign-rp-container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Panel Izquierdo (Menú de Padres Principales) */
+.ign-rp-sidebar {
+    flex: 0 0 300px;
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 20px;
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.ign-rp-tab {
+    padding: 16px 20px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+    color: var(--toolkit_premium-dark-color);
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ign-rp-tab:last-child {
+    border-bottom: none;
+}
+
+.ign-rp-tab:hover {
+    background: var(--bg-light);
+}
+
+.ign-rp-tab.active {
+    border-left-color: var(--toolkit_base_color_dark_green);
+    background: rgba(141, 174, 88, 0.08);
+    color: var(--toolkit_base_color_dark_green);
+}
+
+.ign-rp-tab i {
+    font-size: 12px;
+    color: var(--toolkit_secondary-gray-color);
+    transition: transform 0.3s;
+}
+
+.ign-rp-tab.active i {
+    color: var(--toolkit_base_color_dark_green);
+    transform: translateX(3px);
+}
+
+/* Panel Derecho (Contenido Principal) */
+.ign-rp-content {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    max-height: 75vh;
+}
+
+.ign-rp-panel {
+    display: none;
+    padding: 30px;
+}
+
+.ign-rp-panel.active {
+    display: block;
+    animation: fadePanelIn 0.4s ease forwards;
+    overflow: scroll;
+    max-height: 75vh;
+}
+
+@keyframes fadePanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.permission_header_panel {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed var(--border-light);
+}
+
+.permission_header_panel label {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--toolkit_base_color_dark_green);
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* ==========================================================================
+   Sección Superior: Permisos Generales (Sin hijos)
+   ========================================================================== */
+.ign-rp-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--toolkit_premium-dark-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ign-rp-section-title small {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--toolkit_corporative-orange-color);
+    background: rgba(233, 148, 102, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.ign-rp-submodules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.submodule-block-simple {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    color: #000;
+}
+
+.submodule-block-simple:hover {
+    border-color: var(--toolkit_cromatic-blue-color);
+}
+
+/* ==========================================================================
+   Sección Inferior: Sub-Panel Maestro-Detalle (Con Hijos)
+   ========================================================================== */
+.ign-rp-inner-container {
+    display: flex;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 300px;
+}
+
+/* Sub-panel Izquierdo */
+.ign-rp-inner-sidebar {
+    flex: 0 0 260px;
+    background: #fafbfc;
+    border-right: 1px solid var(--border-light);
+}
+
+.ign-rp-inner-tab {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+}
+
+.ign-rp-inner-tab:hover {
+    background: #f0f2f5;
+}
+
+.ign-rp-inner-tab.active {
+    background: #ffffff;
+    border-left: 3px solid var(--toolkit_corporative-green-color);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.02) inset;
+}
+
+.ign-rp-inner-tab .tab-text {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+}
+
+.ign-rp-inner-tab .tab-badge {
+    font-size: 10px;
+    color: var(--toolkit_secondary-gray-color);
+    margin-top: 2px;
+}
+
+.ign-rp-inner-tab i {
+    font-size: 11px;
+    color: var(--toolkit_secondary-gray-color);
+}
+
+.ign-rp-inner-tab.active i {
+    color: var(--toolkit_corporative-green-color);
+}
+
+/* Sub-panel Derecho */
+.ign-rp-inner-content {
+    flex: 1;
+    background: #ffffff;
+    padding: 20px;
+}
+
+.ign-rp-inner-panel {
+    display: none;
+}
+
+.ign-rp-inner-panel.active {
+    display: block;
+    animation: fadePanelIn 0.3s ease forwards;
+}
+
+.inner-panel-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--toolkit_base_color_dark_green);
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-light);
+}
+
+.ign-rp-option-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ign-rp-option-grid label {
+    font-size: 13px;
+    color: var(--toolkit_premium-dark-color);
+}
+
+/* ==========================================================================
+   Checkboxes Modernos (Custom)
+   ========================================================================== */
+.ign-rp-content input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.ign-rp-content label {
+    position: relative;
+    padding-left: 26px;
+    cursor: pointer;
+    user-select: none;
+    line-height: 18px;
+    display: inline-block;
+    margin: 0;
+}
+
+.ign-rp-content label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    /* transform: translateY(-50%); */
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--toolkit_secondary-gray-color);
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+}
+
+.ign-rp-content label:hover::before {
+    border-color: var(--toolkit_cromatic-blue-color);
+}
+
+.ign-rp-content input[type="checkbox"]:checked+label::before {
+    background-color: var(--toolkit_corporative-green-color);
+    border-color: var(--toolkit_corporative-green-color);
+}
+
+.ign-rp-content input[type="checkbox"]:checked+label::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 3px;
+    transform: rotate(45deg);
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+}
+
+/* Override Botón Principal */
+.btn-toolkit-primary {
+    background-color: var(--toolkit_base_color_dark_green) !important;
+    border-color: var(--toolkit_base_color_dark_green) !important;
+    color: white !important;
+    transition: all 0.3s;
+}
+
+.btn-toolkit-primary:hover {
+    background-color: var(--toolkit_corporative-green-color) !important;
+    border-color: var(--toolkit_corporative-green-color) !important;
+}
+
+
+/* ==========================================================================
+   Responsive Design (Mobile / Tablets) - Swipeable Tabs
+   ========================================================================== */
+@media (max-width: 991px) {
+
+    /* 1. Contenedor Principal: Pasar de Fila a Columna */
+    .ign-rp-container {
+        flex-direction: column;
+        gap: 0;
+        /* Quitamos el gap para que parezca una sola tarjeta */
+    }
+
+    /* 2. Menú Padre Principal: Convertir a Pestañas Horizontales Deslizables */
+    .ign-rp-sidebar {
+        flex: none;
+        width: 100%;
+        max-height: auto;
+        position: relative;
+        top: 0;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        /* Deslizamiento suave en iOS */
+        border-bottom: 2px solid var(--border-light);
+        border-radius: 12px 12px 0 0;
+        margin-bottom: -1px;
+        /* Para que el borde se una con el panel inferior */
+    }
+
+    /* Ocultar barra de scroll visual, pero mantener la función de scroll */
+    .ign-rp-sidebar::-webkit-scrollbar,
+    .ign-rp-inner-sidebar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ign-rp-sidebar,
+    .ign-rp-inner-sidebar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    /* Estilo de la pestaña padre en móvil */
+    .ign-rp-tab {
+        flex: 0 0 auto;
+        /* Evita que las pestañas se aplasten */
+        padding: 14px 20px;
+        border-bottom: 3px solid transparent;
+        border-left: none;
+        /* Quitamos la marca izquierda */
+        white-space: nowrap;
+        /* Evita que el texto salte de línea */
+    }
+
+    .ign-rp-tab.active {
+        border-bottom-color: var(--toolkit_base_color_dark_green);
+        border-left: none;
+        background: rgba(141, 174, 88, 0.08);
+    }
+
+    .ign-rp-tab i {
+        display: none;
+        /* Ocultamos la flecha lateral (>) en móvil */
+    }
+
+    /* Ajuste del contenedor derecho principal */
+    .ign-rp-content {
+        width: 100%;
+        border-radius: 0 0 12px 12px;
+        border-top: none;
+        max-height: none;
+        /* Deja que el contenido empuje hacia abajo */
+    }
+
+    /* 3. Panel Interno (Submódulos): También a Columna */
+    .ign-rp-inner-container {
+        flex-direction: column;
+    }
+
+    /* Sub-menú de hijos: Convertir a Pestañas Horizontales Deslizables */
+    .ign-rp-inner-sidebar {
+        flex: none;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        background: #ffffff;
+    }
+
+    /* Estilo de la pestaña hija en móvil */
+    .ign-rp-inner-tab {
+        flex: 0 0 auto;
+        padding: 12px 16px;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+    }
+
+    .ign-rp-inner-tab.active {
+        border-bottom-color: var(--toolkit_corporative-green-color);
+        border-left: none;
+        box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.02) inset;
+    }
+
+    .ign-rp-inner-tab i {
+        display: none;
+        /* Ocultar flecha */
+    }
+
+    /* 4. Ajustar Header y Botones de Guardar */
+    .permission_header_panel {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 15px;
+    }
+
+    .permission_header_panel>div,
+    .permission_header_panel .row,
+    .permission_header_panel .col-lg-12 {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .permission_header_panel .text-right {
+        text-align: left !important;
+        margin-top: 10px;
+    }
+
+    .permission_header_panel button,
+    .btn-toolkit-primary {
+        width: 100%;
+        /* Botón grande y fácil de tocar en móvil */
+    }
+
+    /* 5. Ajustar Cuadrículas (Grids) a una sola columna */
+    .ign-rp-submodules-grid,
+    .ign-rp-option-grid {
+        grid-template-columns: 1fr;
+        /* Todo uno debajo del otro */
+        gap: 10px;
+    }
+
+    /* Reducir un poco los espacios internos para aprovechar pantalla */
+    .ign-rp-panel {
+        padding: 15px;
+    }
+
+    .ign-rp-inner-content {
+        padding: 15px;
+    }
+}

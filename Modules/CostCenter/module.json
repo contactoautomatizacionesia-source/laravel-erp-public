@@ -1,0 +1,13 @@
+{
+    "name": "CostCenter",
+    "alias": "costcenter",
+    "description": "Módulo de Centros de Costo",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CostCenter\\Providers\\CostCenterServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

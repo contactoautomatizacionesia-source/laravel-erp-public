@@ -1,0 +1,122 @@
+// --- MÓDULO DE GESTIÓN DE CAJAS (INTEGRADO) - LIFEHUNI ---
+
+// ZONA 0: TABLAS EXISTENTES EN EL SISTEMA (Solo Referencia)
+// Se asume que estas tablas ya existen con sus respectivos campos.
+
+Table countries {
+  id uuid [pk]
+  name varchar
+  iso_code varchar
+  
+  Note: 'Tabla existente en el núcleo del sistema'
+}
+
+Table payment_methods {
+  id uuid [pk]
+  name varchar
+  
+  Note: 'Tabla existente en el núcleo del sistema'
+}
+
+// ZONA 1: TABLAS PARAMÉTRICAS DEL MÓDULO
+
+Table cat_denominations {
+  id uuid [pk]
+  country_id uuid [ref: > countries.id]
+  type varchar [note: 'Tipo de pieza: BILLETE o MONEDA']
+  value decimal(18,2) [note: 'Valor nominal de la moneda o billete']
+  image_url varchar [note: 'URL de la imagen del billete/moneda para la interfaz de conteo']
+  is_active boolean [default: true]
+  
+  Note: 'Configuración del cono monetario permitido por cada país'
+}
+
+// ZONA 2: ESTRUCTURA FÍSICA Y JERARQUÍA
+
+Table cash_boxes {
+  id uuid [pk]
+  cost_center_id uuid [note: 'ID del centro de costo (Tabla existente)']
+  parent_id uuid [ref: > cash_boxes.id, note: 'ID de la caja superior para el flujo de dinero']
+  code varchar [unique, note: 'Código físico único (ej. CJ-BOG-01)']
+  name varchar [note: 'Nombre descriptivo (ej. Caja Auxiliar Sur)']
+  type varchar [note: 'Niveles: VAULT (Madre), PRINCIPAL (Sucursal), AUXILIARY (Operador)']
+  base_amount decimal(18,2) [note: 'Fondo inicial que la caja debe mantener siempre']
+  alert_threshold decimal(18,2) [note: 'Límite de efectivo para disparar alerta de recolección']
+  status varchar [note: 'Estados: AVAILABLE, OPEN, MAINTENANCE, INACTIVE']
+  created_at timestamp
+  
+  Note: 'Entidad que representa el activo físico de la caja'
+}
+
+// ZONA 3: ASIGNACIONES Y SESIONES OPERATIVAS
+
+Table cash_box_assignments {
+  id uuid [pk]
+  cash_box_id uuid [ref: > cash_boxes.id]
+  user_id uuid [note: 'ID del usuario del sistema asignado']
+  assigned_at timestamp [note: 'Inicio de la asignación del turno']
+  revoked_at timestamp [note: 'Fin de la asignación del turno']
+  is_active boolean [default: true]
+  
+  Note: 'Vincula legalmente a un operador con una caja específica'
+}
+
+Table cash_sessions {
+  id uuid [pk]
+  assignment_id uuid [ref: > cash_box_assignments.id]
+  opened_at timestamp [note: 'Fecha/hora de apertura de la sesión']
+  closed_at timestamp [note: 'Fecha/hora de cierre de la sesión']
+  opening_base decimal(18,2) [note: 'Monto de base verificado al abrir']
+  total_system_expected decimal(18,2) [note: 'Total esperado según transacciones del CRM']
+  total_physical_counted decimal(18,2) [note: 'Total contado físicamente por el cajero']
+  discrepancy_amount decimal(18,2) [note: 'Diferencia calculada (Sobrante/Faltante)']
+  status varchar [note: 'Estados: OPEN, PENDING_RECEIPT, CLOSED, DISPUTED']
+  
+  Note: 'Control diario del flujo y arqueo de una caja'
+}
+
+// ZONA 4: DETALLES DE CIERRE Y TRAZABILIDAD
+
+Table cash_session_denominations {
+  id uuid [pk]
+  session_id uuid [ref: > cash_sessions.id]
+  denomination_id uuid [ref: > cat_denominations.id]
+  quantity integer [note: 'Cantidad de billetes/monedas contados']
+  subtotal decimal(18,2) [note: 'Suma total por esta denominación']
+  
+  Note: 'Desglose detallado del conteo físico (Rigor Bancario)'
+}
+
+Table cash_session_payments {
+  id uuid [pk]
+  session_id uuid [ref: > cash_sessions.id]
+  payment_method_id uuid [ref: > payment_methods.id]
+  total_amount decimal(18,2) [note: 'Monto total reportado por este medio']
+  transaction_count integer [note: 'Número de transacciones realizadas']
+  reference_data json [note: 'Datos adicionales como números de lote o vouchers']
+  
+  Note: 'Consolidado de ingresos por medios de pago (Efectivo, Tarjetas, etc.)'
+}
+
+Table cash_discrepancies {
+  id uuid [pk]
+  session_id uuid [ref: > cash_sessions.id]
+  type varchar [note: 'Tipo de descuadre: SHORTAGE (Faltante) o SURPLUS (Sobrante)']
+  amount decimal(18,2) [note: 'Valor de la diferencia']
+  justification text [note: 'Explicación obligatoria del operador']
+  authorized_by uuid [note: 'Usuario que aprobó el cierre con descuadre']
+  
+  Note: 'Registro de auditoría para anomalías financieras'
+}
+
+Table cash_transfers {
+  id uuid [pk]
+  origin_session_id uuid [ref: > cash_sessions.id]
+  destination_box_id uuid [ref: > cash_boxes.id]
+  amount decimal(18,2) [note: 'Monto transferido']
+  transfer_hash varchar [note: 'Hash único para seguimiento de la remesa física']
+  status varchar [note: 'Estados: IN_TRANSIT, RECEIVED, REJECTED']
+  received_at timestamp
+  
+  Note: 'Gestión de la custodia del dinero entre niveles jerárquicos'
+}

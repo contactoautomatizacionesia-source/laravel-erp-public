@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'global_seo_setup' => 'Configuración SEO Global',
+    'home_page_seo' => 'SEO de Página Principal',
+    'product_page_seo' => 'SEO de Página de Producto',
+    'category_page_seo' => 'SEO de Página de Categoría',
+    'brand_page_seo' => 'SEO de Página de Marca',
+    'tag_page_seo' => 'SEO de Página de Etiqueta',
+    'post_page_seo' => 'SEO de Página de Publicación',
+    'dynamic_page_seo' => 'SEO de Página Dinámica',
+    'meta_title' => 'Meta Título',
+    'meta_image' => 'Meta Imagen',
+    'homepage_meta_image' => 'Meta Imagen de Página Principal',
+    'homepage_meta_title' => 'Meta Título de Página Principal',
+    'homepage_meta_description' => 'Meta Descripción de Página Principal',
+    'homepage_meta_keywords' => 'Meta Palabras Clave de Página Principal',
+    'product_page_meta_image' => 'Meta Imagen de Página de Producto',
+    'product_page_meta_title' => 'Meta Título de Página de Producto',
+    'product_page_meta_description' => 'Meta Descripción de Página de Producto',
+    'product_page_meta_keywords' => 'Meta Palabras Clave de Página de Producto',
+    'upload_meta_image' => 'Subir Meta Imagen',
+    'meta_title_60_max_recommended_characters' => 'Meta título máximo 60 caracteres recomendados',
+    'meta_description_160_max_recommended_characters' => 'Meta descripción máximo 160 caracteres recomendados',
+];

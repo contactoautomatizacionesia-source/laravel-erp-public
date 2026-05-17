@@ -1,0 +1,1088 @@
+/* UNIFIED NETWORK TREE STYLES */
+.lif-network-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+/* PERFIL - ARBOL */
+.lif-network-page {
+    display: flex;
+    flex-direction: column;
+    gap: 18px
+}
+
+.lif-network-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between
+}
+
+.lif-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.lif-metrics-toggle, .lif-filters-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #1f2a44;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.lif-metrics-toggle i, .lif-filters-toggle i {
+    transition: transform .2s ease;
+}
+
+.lif-metrics.is-collapsed, .lif-controls.is-collapsed {
+    display: none;
+}
+
+.lif-metrics-toggle.is-collapsed i, .lif-filters-toggle.is-collapsed i {
+    transform: rotate(180deg);
+}
+
+.lif-network-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0
+}
+
+.lif-network-sub {
+    font-size: 12px;
+    color: #6b7280
+}
+
+.lif-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f7fb;
+    border: 1px solid #e5e7eb;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #374151
+}
+
+.lif-chip button {
+    border: 0;
+    background: transparent;
+    color: #1f2a44;
+    font-weight: 600
+}
+
+.lif-metrics {
+    padding: 10px;
+}
+
+.lif-metric-card {
+    background: #fff;
+    border: 1px solid #eef0f4;
+    border-radius: 14px;
+    padding: 12px !important;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, .04)
+}
+
+.lif-metric-title {
+    font-size: 11px;
+    color: #6b7280;
+    margin: 0 0 6px
+}
+
+.lif-metric-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1
+}
+
+.lif-metric-loader {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #e5e7eb;
+    border-top-color: #1f2a44;
+    border-radius: 50%;
+    animation: lif-spin .7s linear infinite;
+    vertical-align: middle
+}
+
+.lif-metric-sub .lif-metric-loader {
+    width: 14px;
+    height: 14px;
+    border-width: 2px
+}
+
+
+.lif-metric-sub {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 6px
+}
+
+.lif-donut {
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    background: conic-gradient(#f7b731 0 18%, #7ed957 18% 53%, #3b82f6 53% 83%, #1f2a44 83% 100%);
+    margin-left: auto;
+    position: relative
+}
+
+.lif-donut::after {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px #eef0f4
+}
+
+.lif-donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 11px;
+    color: #4b5563
+}
+
+.lif-donut-details {
+    margin-top: 6px;
+    padding: 4px 8px;
+    font-size: 11px
+}
+
+.lif-donut-other {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 11px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer
+}
+
+.lif-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px
+}
+
+.lif-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050
+}
+
+.lif-modal.open {
+    display: flex
+}
+
+.lif-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, .45)
+}
+
+.lif-modal-card {
+    position: relative;
+    width: 420px;
+    max-width: calc(100% - 32px);
+    max-height: 80vh;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #eef0f4;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, .2);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    color: #000;
+}
+
+.lif-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef0f4
+}
+
+.lif-modal-head h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #000;
+}
+
+.lif-modal-close {
+    border: 0;
+    background: #f3f4f6;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 12px
+}
+
+.lif-modal-body {
+    padding: 12px 14px;
+    overflow: auto;
+    flex: 1 1 auto
+}
+
+.lif-plan-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.lif-plan-row {
+    display: grid;
+    grid-template-columns: 16px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    padding: 6px 8px;
+    border: 1px solid #eef0f4;
+    border-radius: 10px;
+    background: #f9fafb
+}
+
+.lif-plan-pct {
+    font-weight: 700;
+    color: #111827
+}
+
+.lif-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #eef0f4;
+    border-radius: 14px;
+    padding: 10px 12px;
+    color: #000;
+}
+
+.lif-controls input,
+.lif-controls select {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 8px 10px;
+    width: 250px;
+    font-size: 12px
+}
+
+.lif-controls button {
+    border: 1px solid var(--base_color);
+    background-color: var(--base_color);
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px
+}
+
+.lif-controls .lif-ghost {
+    background: #fff;
+    color: #000
+}
+
+.lif-search-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 30%;
+}
+
+.lif-search-wrapper input {
+    width: 100%;
+    padding: 5px 40px 5px 10px;
+    /* espacio para la lupa */
+    box-sizing: border-box;
+}
+
+.lif-search-wrapper button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.lif-search-wrapper button i {
+    font-size: 16px;
+    color: #888;
+}
+
+.lif-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+}
+
+.lif-tree-wrap {
+    background: #fff;
+    border: 1px solid #eef0f4;
+    border-radius: 16px;
+    padding: 18px;
+    position: relative;
+    min-height: 320px
+}
+
+.lif-d3 {
+    width: 100%;
+    height: 620px
+}
+
+.lif-d3 svg {
+    width: 100%;
+    height: 100%
+}
+
+.lif-d3-link {
+    fill: none;
+    stroke: #cbd5f5;
+    stroke-width: 2;
+    opacity: .6
+}
+
+.lif-d3-link.is-drawing {
+    stroke-width: 1.5;
+}
+
+.lif-d3-node.is-hidden {
+    opacity: .2;
+    pointer-events: none
+}
+
+.lif-node {
+    width: 240px;
+    background: #0f172a;
+    color: #fff;
+    border-radius: 14px;
+    padding: 10px 12px 18px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .15);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, .1);
+    min-height: 150px;
+    position: relative
+}
+
+.lif-node.is-loading {
+    animation: lif-loading-pulse 1s ease-in-out infinite;
+}
+
+.lif-d3-node.is-new .lif-node {
+    animation: lif-node-pop 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: var(--lif-delay, 0ms);
+}
+
+.lif-d3-node.is-new .lif-node-toggle {
+    animation: lif-toggle-pop 0.5s ease both;
+    animation-delay: calc(var(--lif-delay, 0ms) + 80ms);
+}
+
+.lif-node.light {
+    background: #fff;
+    color: #111827;
+    border: 1px solid #eef0f4;
+    box-shadow: 0 10px 18px rgba(15, 23, 42, .06)
+}
+
+.lif-node-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px
+}
+
+.lif-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px
+}
+
+.lif-node-name {
+    font-weight: 700;
+    font-size: 13px;
+    margin: 0;
+    line-height: 15px;
+}
+
+.lif-node-meta {
+    font-size: 11px;
+    color: #cbd5f5
+}
+
+.lif-node.light .lif-node-meta {
+    color: #6b7280
+}
+
+.lif-node-doc{
+    font-size: 12px;
+}
+
+#lif-load-next:disabled{
+    cursor: no-drop;
+    opacity: .3
+}
+
+.lif-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 700
+}
+
+.lif-plan-icon {
+    display: inline-flex;
+    align-items: center;
+}
+
+.lif-plan-icon svg {
+    width: 12px;
+    height: 12px;
+    display: block;
+}
+
+.lif-badge[data-plan="Sol"] {
+    background: #fff7e6;
+    color: #a16207
+}
+
+.lif-badge[data-plan="Soles"] {
+    background: #f0fdf4;
+    color: #15803d
+}
+
+.lif-badge[data-plan="Life"] {
+    background: #eff6ff;
+    color: #1d4ed8
+}
+
+.lif-badge[data-plan="Platino"] {
+    background: #e2e8f0;
+    color: #0f172a
+}
+
+.lif-node-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    font-size: 11px
+}
+
+.lif-node-foot span {
+    color: #e2e8f0
+}
+
+.lif-node-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .02em
+}
+
+.lif-node-metric strong {
+    font-size: 12px;
+    color: #fff;
+    font-weight: 700
+}
+
+.lif-node.light .lif-node-foot span {
+    color: #6b7280
+}
+
+.lif-node.light .lif-node-metric strong {
+    color: #111827
+}
+
+.lif-node-toggle {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 1;
+    background: #fff;
+    border: 1px solid #cbd5f5;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    bottom: -11px;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, .15)
+}
+
+.lif-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 380px;
+    height: 100%;
+    background: #ffffff;
+    border-left: 1px solid #eef0f4;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+    transition: right .3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1060;
+    display: none;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+}
+
+.lif-panel.open {
+    display: flex;
+    right: 0;
+}
+
+.lif-panel-header {
+    height: 220px;
+    position: relative;
+    padding: 30px;
+    color: white;
+    background: linear-gradient(135deg, var(--lif-accent, #10b981) 0%, rgba(15, 23, 42, 0.4) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    transition: background 0.4s ease;
+}
+
+.lif-panel-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+}
+
+.lif-panel-close:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.lif-panel-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    opacity: 0.9;
+}
+
+.lif-panel-badge svg, .lif-panel-badge .svg-icon-plan {
+    width: 16px;
+    height: 16px;
+}
+
+.lif-panel-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+    color: white;
+}
+
+.lif-panel-subtitle {
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 8px 0 0;
+}
+
+.lif-panel-avatar-wrap {
+    position: absolute;
+    bottom: -45px;
+    left: 30px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid white;
+    overflow: hidden;
+    background: #f1f5f9;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lif-avatar-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    background: var(--lif-accent, #10b981);
+}
+
+.lif-panel-body {
+    padding: 70px 25px 30px;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.lif-card {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #edf2f7;
+}
+
+/* Plan Card */
+.lif-plan-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f8fafc; /* Simpler background */
+    border-color: #edf2f7;
+}
+
+.lif-plan-icon-box {
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.lif-plan-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lif-info-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.lif-info-group span {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+/* Plan Progress */
+.lif-plan-progress {
+    margin-bottom: 20px;
+}
+
+.lif-plan-progress-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.lif-plan-progress-head label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.lif-plan-progress-head span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.lif-progress-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.lif-progress-bar span {
+    display: block;
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: var(--lif-accent, #10b981);
+    transition: width 0.3s ease;
+}
+
+.lif-progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+/* Stats Grid */
+.lif-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.lif-stat-card {
+    margin-bottom: 0;
+}
+
+.lif-stat-card label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.lif-stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+}
+
+/* Generation Progress */
+.lif-gen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.lif-gen-header label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.lif-gen-header span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.lif-gen-progress {
+    display: flex;
+    gap: 6px;
+    height: 8px;
+}
+
+.lif-gen-segment {
+    flex: 1;
+    border-radius: 4px;
+    background: #e2e8f0;
+}
+
+.lif-gen-segment.active {
+    background: var(--lif-accent, #10b981);
+}
+
+/* Footer & Buttons */
+.lif-panel-footer {
+    margin-top: auto;
+    padding: 10px;
+}
+
+.lif-btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 52px;
+    background: #0f172a;
+    color: white !important;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+.lif-btn-primary:hover {
+    background: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+    color: white !important;
+}
+
+.lif-panel-id-brand {
+    text-align: center;
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+/* Modals also need to be visible in fullscreen */
+.lif-modal {
+    z-index: 1070;
+}
+
+.lif-skeleton {
+    display: none
+}
+
+.lif-skeleton.active {
+    display: block
+}
+
+.lif-skeleton .sk-row {
+    display: flex;
+    gap: 18px;
+    justify-content: center
+}
+
+.lif-skeleton .sk-row-links {
+    margin: 6px 0 -6px;
+    gap: 80px;
+}
+
+.lif-skeleton .sk-vert {
+    width: 1px;
+    height: 30px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    transform-origin: top center;
+    animation: lif-vert-grow 1.2s ease infinite;
+}
+
+.lif-skeleton .sk-vert:nth-child(2) { animation-delay: 120ms; }
+.lif-skeleton .sk-vert:nth-child(3) { animation-delay: 240ms; }
+
+.lif-skeleton .sk-node {
+    width: 180px;
+    height: 70px;
+    border-radius: 14px;
+    background: linear-gradient(90deg, #edf2f7 25%, #f7fafc 37%, #edf2f7 63%);
+    background-size: 400% 100%;
+    animation: sk 1.3s ease infinite, lif-node-pop 0.9s ease both
+}
+
+@keyframes lif-spin {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(360deg) }
+}
+
+@keyframes sk {
+    0% { background-position: 100% 0 }
+    100% { background-position: 0 0 }
+}
+
+@keyframes lif-node-pop {
+    0% { opacity: 0; transform: scale(0.85) translateY(6px); }
+    60% { opacity: 1; transform: scale(1.02) translateY(0); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes lif-toggle-pop {
+    0% { transform: translateX(-50%) scale(0.6); opacity: 0; }
+    100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+@keyframes lif-vert-grow {
+    0% { transform: scaleY(0.2); opacity: 0.3; }
+    50% { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(0.2); opacity: 0.3; }
+}
+
+@keyframes lif-loading-pulse {
+    0% {
+        box-shadow: 0 0 0 var(--node-shadow-pulse, rgba(16, 185, 129, 0));
+    }
+
+    45% {
+        background: var(--node-bg-pulse, rgba(16, 185, 129, 0.45));
+    }
+
+    100% {
+        box-shadow: 0 0 0 var(--node-shadow-pulse, rgba(16, 185, 129, 0));
+    }
+}
+
+.lif-empty,
+.lif-error {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    color: #6b7280
+}
+
+.lif-empty button,
+.lif-error button {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #1f2a44;
+    background: #1f2a44;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 12px
+}
+
+@media (max-width:1200px) {
+    .lif-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+}
+
+@media (max-width:768px) {
+    .lif-search-wrapper{
+        width: 100%;
+    }
+    .lif-controls {
+        flex-direction: column;
+        align-items: stretch
+    }
+
+    .lif-node {
+        width: 180px
+    }
+
+    .lif-panel {
+        width: 100%
+    }
+}
+
+
+/* SALE_DETAILS */
+.lif-tab-btn.active{
+    background: var(--base_color);
+    color: #fff;
+    border-color: var(--base_color);
+}
+.lif-diff-card{background:#fff;border:1px solid #eef0f4;border-radius:14px;padding:16px;margin-top:20px}
+.lif-diff-header{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.lif-diff-title{font-size:15px;font-weight:700;margin:0}
+.lif-diff-stepper{display:flex;flex-direction:column;gap:14px;margin-top:14px}
+.lif-diff-step{display:flex;gap:12px;align-items:flex-start;position:relative}
+.lif-diff-step::before{content:'';position:absolute;left:14px;top:34px;width:2px;height:calc(100% - 22px);background:#e5e7eb}
+.lif-diff-step:last-child::before{display:none}
+.lif-diff-avatar{width:30px;height:30px;border-radius:10px;background:#1f2a44;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.lif-diff-box{flex:1;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:10px 12px}
+.lif-diff-box.dark{background:#0f172a;color:#fff;border-color:#0f172a}
+.lif-diff-box.gray{background:#f3f4f6;color:#6b7280}
+.lif-diff-row{display:flex;justify-content:space-between;gap:10px;font-size:12px}
+.lif-diff-row strong{font-size:13px}
+.lif-diff-tag{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 8px;font-size:10px;background:#e2e8f0;color:#0f172a}
+
+/* Refactored details-tabs styles to use unified classes */
+.lif-admin-tree-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+}
+
+/* FULLSCREEN MODERNO */
+.lif-network-page:fullscreen {
+    background: #f8fafc !important;
+    padding: 30px !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Chrome, Safari, Edge */
+.lif-network-page:-webkit-full-screen {
+    background: #f8fafc !important;
+    padding: 30px !important;
+}
+
+/* Firefox */
+.lif-network-page:-moz-full-screen {
+    background: #f8fafc !important;
+    padding: 30px !important;
+}
+
+.is-fullscreen .lif-metrics,
+.is-fullscreen .lif-network-header {
+    display: none !important;
+}
+
+.is-fullscreen .lif-tree-wrap {
+    flex: 1 !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.is-fullscreen .lif-d3 {
+    flex: 1 !important;
+    height: auto !important;
+    min-height: 500px !important;
+}

@@ -1,0 +1,21 @@
+{
+    "ClubPoint": {
+        "item_id": "49679309",
+        "migration": [
+            "2022_11_16_153129_create_point_table.php",
+            "2022_11_23_132624_create_club_point_wallets_table.php",
+            "2022_11_25_181214_create_club_point_permission.php"
+        ],
+        "names": [],
+        "versions": [
+            "1.4"
+        ],
+        "min_system_version":"4.3",
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is ClubPoint module for Amazcart. Thanks for using. Amazcrt version required 4.3"
+        ]
+    }
+}

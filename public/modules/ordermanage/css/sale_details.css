@@ -1,0 +1,420 @@
+    label.primary_input_label.red {
+        font-size: 18px;
+        font-weight: 700;
+        color: #e80e0e;
+    }
+
+    label.primary_input_label.sub-title {
+        margin-bottom: 0px;
+        height: auto;
+    }
+
+    label.primary_input_label.sub-details {
+        margin-bottom: 0px;
+        height: auto;
+        min-height: 150px;
+    }
+
+    label.primary_input_label.sub-title b,
+    label.primary_input_label.sub-details b {
+        color: #e80e0e;
+    }
+
+    .pl-25 {
+        padding-left: 22%;
+    }
+
+    .variant_color {
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        margin-left: 10px;
+        margin-top: 4px;
+        border-radius: 50%;
+    }
+
+    .logo_div {
+        display: flex;
+        height: 50px;
+        width: 140px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .logo_div img {
+        max-width: 100%;
+        max-height: 50px;
+    }
+
+    .product_img_div {
+        display: flex;
+        height: 70px;
+        width: 70px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .product_img_div img {
+        max-width: 100%;
+        max-height: 70px;
+        border-radius: 10px;
+    }
+
+    @media (max-width: 767px) {
+        .pl-25 {
+            padding-left: 0;
+        }
+    }
+
+    .pointer {
+        cursor: pointer !important;
+    }
+
+    .link_color {
+        color: var(--text_color);
+    }
+
+    /* Estilos personalizados  */
+
+
+    .ign-sales-details .table-heading {
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    /* Tabla */
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .invoice-table tr {
+        border-bottom: 1px solid #f1f3f6;
+    }
+
+    .invoice-table tr:last-child {
+        border-bottom: none;
+    }
+
+    .invoice-table td {
+        padding: 4px;
+        font-size: 14px;
+    }
+
+    /* Etiquetas */
+    .invoice-table td:first-child {
+        color: #6e6e6e;
+        font-weight: 500;
+        width: 40%;
+    }
+
+    /* Valores */
+    .invoice-table td:last-child {
+        color: var(--text_black);
+        font-weight: 600;
+    }
+
+    .totals-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .totals-table tr {
+        border-bottom: 1px solid #f1f3f6;
+    }
+
+    .totals-table td:last-child {
+        color: var(--text_black);
+        font-weight: 600;
+        text-align: end;
+    }
+
+    .totals-table td {
+        padding: 4px;
+        font-size: 14px;
+    }
+
+    .totals-table tr:nth-child(odd) {
+        background-color: #fbfbfb;
+    }
+
+    .totals-table td:first-child {
+        color: #6e6e6e;
+        font-weight: 500;
+        width: 40%;
+    }
+
+
+    .products-table tr {
+        border-bottom: 1px solid #f1f3f6;
+    }
+
+    .products-table td {
+        color: var(--text_black);
+        padding: 4px;
+        font-weight: 400;
+    }
+
+    .text-end {
+        text-align: end;
+    }
+
+    .process-description {
+        color: var(--text_black);
+    }
+
+/* ==========================================================================
+   SALE DETAILS V2 - MODERN CARD DESIGN
+   ========================================================================== */
+
+.ign-sales-details {
+    padding: 1.5rem;
+    background-color: #f8fafc;
+}
+
+.ign-order-id {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--toolkit_base_color_dark_green);
+    margin: 0;
+}
+
+.ign-order-number {
+    color: #8dae58; /* Greenish secondary color if not base_color */
+}
+
+.ign-status-badge {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ign-status-paid {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.ign-order-card {
+    background: #fff;
+    border: none;
+    border-radius: 16px;
+    padding: 1.5rem;
+    height: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.ign-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.ign-card-header i {
+    font-size: 1.25rem;
+    color: var(--toolkit_corporative-green-color);
+}
+
+.ign-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
+.ign-info-label {
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ign-info-value {
+    font-size: 14px;
+    color: #1e293b;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.ign-info-value:last-child {
+    margin-bottom: 0;
+}
+
+/* Sidebar Specifics */
+.ign-sidebar-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.ign-sidebar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+}
+
+.ign-input-group {
+    margin-bottom: 1.25rem;
+}
+
+.ign-input-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.ign-priority-alert {
+    background-color: #fce7f3;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    gap: 12px;
+    margin-top: 1.5rem;
+}
+
+.ign-priority-alert i {
+    color: #db2777;
+    margin-top: 3px;
+}
+
+.ign-priority-text {
+    font-size: 13px;
+    color: #9d174d;
+    line-height: 1.4;
+}
+
+/* Products Table */
+.ign-products-section {
+    margin-top: 3rem;
+}
+
+.ign-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.ign-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.ign-table-container {
+    background: #fff;
+    border-radius: 16px;
+    overflow-x: scroll;
+    scrollbar-width: thin;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ign-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ign-table th {
+    background: #f8fafc;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.ign-table td {
+    padding: 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.ign-td-image {
+    width: 64px;
+}
+
+.ign-product-img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #f1f5f9;
+}
+
+.ign-product-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.ign-product-sku {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+.ign-product-details {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.ign-product-price {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+/* Summary Box */
+.ign-summary-wrapper {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.ign-summary-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.ign-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.ign-summary-row.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f1f5f9;
+    color: #1e293b;
+    font-weight: 700;
+    align-items: center;
+}
+
+.ign-total-label {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.ign-total-value {
+    font-size: 1.25rem;
+    color: #8dae58;
+}
+
+/* Utility classes */
+.gap-24 { gap: 24px; }
+.mb-24 { margin-bottom: 24px; }
+.mt-24 { margin-top: 24px; }
