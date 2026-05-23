@@ -117,9 +117,23 @@ class CountryController extends Controller
     public function update(UpdateCountryRequest $request){
 
         try{
-            $this->countryService->update($request->except('_token'));
+            $data = $request->except('_token');
+            $this->countryService->update($data);
+            
+            // BUG 6: Llamar setDefault() si is_default === true
+            if ($request->boolean('is_default') === true) {
+                $this->defaultLocationGuard->setDefault($data['id']);
+            }
+            
             LogActivity::successLog('Country Updated Successfully');
             return $this->reloadWithData();
+        }catch(DomainException $e){
+            LogActivity::errorLog($e->getMessage());
+            Toastr::error($e->getMessage(), 'Error!!');
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ],422);
         }catch(Exception $e){
             LogActivity::errorLog($e->getMessage());
             Toastr::error($e->getMessage(), 'Error!!');

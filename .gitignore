@@ -35,3 +35,26 @@ bootstrap/cache/*.php
 .scannerwork/
 # Local Pi runtime state
 .atl/
+
+# Test/cache files
+.phpunit.result.cache
+status.txt
+
+# AI tooling configs
+.ai/
+.antigravitycli/
+.cursor/
+.gemini/
+.junie/
+.mcp.json
+.openclaw/
+.pi/
+.windsurf/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+SOUL.md
+boost.json
+opencode.json
+openspec/
+.github/copilot-instructions.md

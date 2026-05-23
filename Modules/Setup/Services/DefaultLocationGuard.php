@@ -10,6 +10,13 @@ class DefaultLocationGuard
 {
     public function setDefault(int $countryId): void
     {
+        $country = Country::findOrFail($countryId);
+        if ((int) $country->status === 0) {
+            throw new DomainException(
+                'No se puede establecer como país por defecto un país inactivo.'
+            );
+        }
+
         DB::transaction(function () use ($countryId) {
             Country::where('is_default', true)
                 ->where('id', '!=', $countryId)

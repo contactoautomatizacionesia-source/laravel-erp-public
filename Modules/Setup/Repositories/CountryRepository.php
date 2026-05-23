@@ -45,6 +45,19 @@ class CountryRepository{
     public function update($data){
 
         $country = Country::findOrFail($data['id']);
+        
+        // BUG 5: Verificar que hay al menos otro país con is_default=true
+        if (isset($data['is_default']) && $data['is_default'] == false) {
+            $otherDefault = Country::where('is_default', true)
+                                   ->where('id', '!=', $data['id'])
+                                   ->exists();
+            if (!$otherDefault) {
+                throw new \DomainException(
+                    'Debe existir al menos un país marcado como predeterminado.'
+                );
+            }
+        }
+        
         if(isset($data['flag'])){
             ImageStore::deleteImage($country->flag);
 

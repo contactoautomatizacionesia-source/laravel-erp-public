@@ -45,4 +45,5 @@
     </section>
 @endsection
 
+@include('setup::location.components.cascade_confirm_modal')
 @include('setup::location.state.components.scripts')

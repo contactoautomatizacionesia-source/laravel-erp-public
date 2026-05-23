@@ -101,16 +101,80 @@
 
                 });
 
+                let statusChangeData = {};
+
                 $(document).on('change', '.status_change', function(event){
                     event.preventDefault();
-                    let status = 0;
-                    if($(this).prop('checked')){
-                        status = 1;
+                    
+                    let checkbox = $(this);
+                    let status = checkbox.prop('checked') ? 1 : 0;
+                    let id = checkbox.data('id');
+
+                    // Si se está inactivando (status = 0), mostrar preview de cascada
+                    if(status === 0) {
+                        $('#pre-loader').removeClass('d-none');
+                        
+                        // Guardar datos para usar después de la confirmación
+                        statusChangeData = {
+                            id: id,
+                            status: status,
+                            checkbox: checkbox
+                        };
+
+                        $.ajax({
+                            url: "{{ route('setup.country.preview-cascade') }}",
+                            type: "POST",
+                            data: {
+                                '_token': "{{ csrf_token() }}",
+                                'type': 'state',
+                                'id': id
+                            },
+                            success: function(response) {
+                                $('#pre-loader').addClass('d-none');
+                                
+                                if(response.impact) {
+                                    $('#cascadeStatesCount').text(response.impact.states || 0);
+                                    $('#cascadeCitiesCount').text(response.impact.cities || 0);
+                                    $('#cascadeConfirmModal').modal('show');
+                                }
+                            },
+                            error: function(response) {
+                                $('#pre-loader').addClass('d-none');
+                                // Revertir el checkbox
+                                checkbox.prop('checked', true);
+                                
+                                var msg = (response.responseJSON && response.responseJSON.message)
+                                    ? response.responseJSON.message
+                                    : 'Ocurrió un error';
+                                toastr.error(msg, "{{__('common.error')}}");
+                            }
+                        });
+                    } else {
+                        // Si se está activando, proceder normalmente
+                        executeStatusChange(id, status);
                     }
-                    else{
-                        status = 0;
+                });
+
+                // Confirmar cascada
+                $(document).on('click', '#cascadeConfirmBtn', function(event){
+                    event.preventDefault();
+                    $('#cascadeConfirmModal').modal('hide');
+                    
+                    if(statusChangeData.id && statusChangeData.status !== undefined) {
+                        executeStatusChange(statusChangeData.id, statusChangeData.status);
                     }
-                    let id = $(this).data('id');
+                });
+
+                // Cancelar modal - revertir checkbox
+                $('#cascadeConfirmModal').on('hidden.bs.modal', function () {
+                    // Si el botón de confirmar no fue clickeado, revertir
+                    if(statusChangeData.checkbox) {
+                        statusChangeData.checkbox.prop('checked', true);
+                        statusChangeData = {};
+                    }
+                });
+
+                function executeStatusChange(id, status) {
                     $('#pre-loader').removeClass('d-none');
                     let formData = new FormData();
                     formData.append('_token', "{{ csrf_token() }}");
@@ -128,18 +192,21 @@
                             toastr.success("{{__('common.updated_successfully')}}", "{{__('common.success')}}");
                             $('#pre-loader').addClass('d-none');
                         },
-                        error: function(response) {
-                            if(response.responseJSON.error){
-                                toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
-                                $('#pre-loader').addClass('d-none');
-                                return false;
-                            }
-                            toastr.error("{{__('common.error_message')}}");
+                        error: function(xhr) {
                             $('#pre-loader').addClass('d-none');
+
+                            var numericStatus = parseInt(status, 10);
+                            var $checkbox = $('#checkbox' + id);
+                            // Revertir el estado previo del toggle
+                            $checkbox.prop('checked', numericStatus === 0);
+
+                            var msg = (xhr.responseJSON && xhr.responseJSON.message)
+                                ? xhr.responseJSON.message
+                                : 'Ocurrió un error';
+                            toastr.error(msg, "{{__('common.error')}}");
                         }
                     });
-
-                });
+                }
 
                 function YajraReActive(){
 

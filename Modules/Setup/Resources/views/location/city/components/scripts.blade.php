@@ -132,6 +132,7 @@
                             status = 0;
                         }
                         let id = $(this).data('id');
+                        let checkbox = $(this);
                         $('#pre-loader').removeClass('d-none');
                         let formData = new FormData();
                         formData.append('_token', "{{ csrf_token() }}");
@@ -149,14 +150,18 @@
                                 toastr.success("{{ __('common.updated_successfully') }}","{{__('common.success')}}");
                                 $('#pre-loader').addClass('d-none');
                             },
-                            error: function(response) {
-                            if(response.responseJSON.error){
-                                toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
+                            error: function(xhr) {
                                 $('#pre-loader').addClass('d-none');
-                                return false;
-                            }
-                                toastr.error("{{__('common.error_message')}}");
-                                $('#pre-loader').addClass('d-none');
+
+                                var numericStatus = parseInt(status, 10);
+                                var $checkbox = checkbox;
+                                // Revertir el estado previo del toggle
+                                $checkbox.prop('checked', numericStatus === 0);
+
+                                var msg = (xhr.responseJSON && xhr.responseJSON.message)
+                                    ? xhr.responseJSON.message
+                                    : 'Ocurrió un error';
+                                toastr.error(msg, "{{__('common.error')}}");
                             }
                         });
 

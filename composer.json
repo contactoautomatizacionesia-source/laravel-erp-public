@@ -68,13 +68,14 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
-        "spatie/laravel-ignition": "^2.0",
         "fakerphp/faker": "^1.9.1",
         "knuckleswtf/scribe": "^4.0",
+        "laravel/boost": "1.8.5",
         "laravel/dusk": "^7.0",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0"
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "config": {
         "platform-check": false,

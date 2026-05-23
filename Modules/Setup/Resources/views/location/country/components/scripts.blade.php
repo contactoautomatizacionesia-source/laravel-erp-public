@@ -83,14 +83,16 @@
                             $('#formHtml').html(response.createForm);
 
                         },
-                        error:function(response) {
-                            if(response.responseJSON.error){
-                                toastr.error(response.responseJSON.error ,"{{__('common.error')}}");
-                                $('#pre-loader').addClass('d-none');
-                                return false;
-                            }
-                            showValidationErrors('#edit_form',response.responseJSON.errors);
+                        error: function(xhr) {
                             $('#pre-loader').addClass('d-none');
+                            var resp = xhr.responseJSON;
+                            if (resp && resp.status === 'error' && resp.message) {
+                                toastr.error(resp.message, "{{__('common.error')}}");
+                            } else if (resp && resp.errors) {
+                                showValidationErrors('#edit_form', resp.errors);
+                            } else {
+                                toastr.error('Ocurrió un error', "{{__('common.error')}}");
+                            }
                         }
                     });
                 });
@@ -252,20 +254,17 @@
                         },
                         error: function(xhr) {
                             $('#pre-loader').addClass('d-none');
-
-                            const numericStatus = parseInt(status, 10);
-                            const $checkbox = $('#checkbox' + id);
-                            // Ante 422 (DomainException desde status()) u otro error: estado previo del toggle
-                            // (intentaba pasar a inactivo => volver a activo; intentaba activar => volver a inactivo)
-                            $checkbox.prop('checked', numericStatus === 0);
-
-                            if (xhr.responseJSON && xhr.responseJSON.message) {
-                                toastr.error(xhr.responseJSON.message, "{{__('common.error')}}");
-                            } else if (xhr.responseJSON && xhr.responseJSON.error) {
-                                toastr.error(xhr.responseJSON.error, "{{__('common.error')}}");
-                            } else {
-                                toastr.error("{{__('common.error_message')}}");
+                            var numericStatus = parseInt(status, 10);
+                            if (statusChangeData.checkbox) {
+                                statusChangeData.checkbox.prop('checked', numericStatus === 0);
                             }
+                            var resp = xhr.responseJSON;
+                            if (resp && resp.status === 'error' && resp.message) {
+                                toastr.error(resp.message, "{{__('common.error')}}");
+                            } else {
+                                toastr.error('Ocurrió un error', "{{__('common.error')}}");
+                            }
+                            statusChangeData = {};
                         }
                     });
                 }
