@@ -33,3 +33,5 @@ bootstrap/cache/*.php
 
 # Otros
 .scannerwork/
+# Local Pi runtime state
+.atl/
