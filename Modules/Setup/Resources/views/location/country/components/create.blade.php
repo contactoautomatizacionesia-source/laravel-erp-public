@@ -1,4 +1,3 @@
-
 <div class="main-title d-md-flex align-items-baseline gap-2">
     <x-backEnd.back-button :text="false" />
     <h3 class="mb-20">
@@ -67,18 +66,19 @@
                         <button class="" type="button">
                             <label class="primary-btn small fix-gr-bg"
                                 for="flag">{{ __('common.browse') }} </label>
-                            <input type="file" class="d-none" name="flag" id="flag">
+                            <input type="file" class="d-none" name="flag" id="flag" accept="image/jpeg,image/png,image/jpg,image/gif">
                         </button>
                     </div>
                 </div>
 
-                <span class="text-danger" id="error_slider_image"></span>
+                <span class="text-danger" id="error_flag"></span>
 
             </div>
             <div class="col-lg-4" id="createCountryFlagDiv">
-                <div class="flag_img_div">
-                    <img id="FlagPreview"
-                    src="{{ showImage('flags/no_image.png') }}" alt="">
+                <div class="flag_img_div position-relative">
+                    <img id="FlagPreview" class="flag-preview-img"
+                    src="{{ showImage('flags/no_image.png') }}" alt="" style="object-fit: cover; width: 61px; height: 36px; border-radius: 4px; border: 1px solid #ddd;">
+                    <button type="button" class="btn btn-sm btn-danger position-absolute clear_flag_btn d-none" style="top: -10px; right: -10px; border-radius: 50%; width: 25px; height: 25px; padding: 0; line-height: 1;">&times;</button>
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
 
             <div class="col-xl-12">
                 <div class="primary_input">
-                    <label class="primary_input_label" for="is_default">País por defecto</label>
+                    <label class="primary_input_label" for="is_default">{{ __('setup.default') }}</label>
                     <label class="switch_toggle" for="is_default">
                         <input type="hidden" name="is_default" value="0">
                         <input type="checkbox" name="is_default" id="is_default" value="1">
@@ -121,9 +121,9 @@
 
             <div class="col-lg-12 text-center">
                 <div class="d-flex justify-content-center pt_20">
-                    <button type="submit" class="primary-btn semi_large2 fix-gr-bg"><i
-                            class="ti-check"></i>
-                            {{ __('common.save') }}
+                    <button type="submit" class="btn-toolkit btn-primary btn-icon">
+                        <span class="ti-check"></span>
+                        {{ __('common.save') }}
                     </button>
                 </div>
             </div>

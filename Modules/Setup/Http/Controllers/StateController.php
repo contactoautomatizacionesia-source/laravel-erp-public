@@ -40,9 +40,24 @@ class StateController extends Controller
         }
     }
 
-    public function getData(){
+    public function getData(Request $request){
         try{
+            $table = $request->get('table', 'all');
             $states = $this->stateService->getAll();
+            
+            if ($table === 'active') {
+                $states->where('states.status', 1);
+            } elseif ($table === 'inactive') {
+                $states->where('states.status', 0);
+            } elseif ($table === 'default') {
+                $defaultCountry = \Modules\Setup\Entities\Country::where('is_default', 1)->first();
+                if ($defaultCountry) {
+                    $states->where('states.country_id', $defaultCountry->id);
+                } else {
+                    $states->whereRaw('1 = 0');
+                }
+            }
+            
             return DataTables::of($states)
             ->orderColumn('name', 'states.name $1')
             ->addIndexColumn()
@@ -187,6 +202,31 @@ class StateController extends Controller
         } catch (Exception $e) {
             LogActivity::errorLog($e->getMessage());
             return response()->json([], 500);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $this->stateService->destroy($id);
+            LogActivity::successLog('State Deleted Successfully');
+            return response()->json([
+                'status' => 'success',
+                'message' => __('common.deleted_successfully')
+            ], 200);
+        } catch (DomainException $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 422);
+        } catch (Exception $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => __('common.error_message')
+            ], 503);
         }
     }
 

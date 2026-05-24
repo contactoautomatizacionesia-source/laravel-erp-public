@@ -3,7 +3,41 @@
         (function($) {
         	"use strict";
                 $(document).ready(function(){
-                    YajraReActive();
+                    let table = initGlobalDataTable('#allData', "{{ route('setup.city.getData') }}", [
+                        { data: 'DT_RowIndex', name: 'id' },
+                        { data: 'name', name: 'name' },
+                        { data: 'country', name: 'state.country.name' },
+                        { data: 'state', name: 'state.name' },
+                        { data: 'status', name: 'status' },
+                        { data: 'action', name: 'action' }
+                    ], {
+                        columnDefs: [
+                            { targets: 5, responsivePriority: 1 },   // action
+                            { targets: 1, responsivePriority: 2 },   // name
+                            { targets: 4, responsivePriority: 3 },   // status
+                            { targets: 0, responsivePriority: 4 },   // DT_RowIndex
+                            { targets: 2, responsivePriority: 5 },   // country
+                            { targets: 3, responsivePriority: 6 },   // state
+                        ]
+                    });
+
+                    $('.nav-link[data-toggle="tab"]').on('click', function (e) {
+                        e.preventDefault();
+                        $('.nav-link').removeClass('active show');
+                        $(this).addClass('active show');
+                        let tableType = $(this).data('table');
+                        let url = "{{ route('setup.city.getData') }}?table=" + tableType;
+                        table.ajax.url(url).load();
+                        if(tableType === 'all') {
+                            $('#table_title').text("{{ __('common.city') }} {{ __('common.list') }}");
+                        } else if(tableType === 'active') {
+                            $('#table_title').text("{{ __('common.city') }} {{ __('common.active') }}");
+                        } else if(tableType === 'inactive') {
+                            $('#table_title').text("{{ __('common.city') }} {{ __('common.inactive') }}");
+                        } else if(tableType === 'default') {
+                            $('#table_title').text("{{ __('common.city') }} {{ __('setup.default') }}");
+                        }
+                    });
 
                     $(document).on('submit', '#create_form', function(event){
                         event.preventDefault();
@@ -167,108 +201,67 @@
 
                     });
 
+                    $(document).on('click', '.delete_city', function(event){
+                        event.preventDefault();
+                        let id = $(this).data('id');
+                        let url = "{{ route('setup.city.destroy') }}";
+                        window._deletePayload = { id: id, url: url };
+                        confirm_modal(url);
+                    });
 
-                    function YajraReActive(){
+                    $(document).on('click', '#delete_link', function(event) {
+                        event.preventDefault();
+                        let payload = window._deletePayload;
+                        if (!payload) return;
 
-                        $('#allData').DataTable({
-                            processing: true,
-                            serverSide: true,
-                            "stateSave": true,
-                            ajax: "{{ route('setup.city.getData') }}",
-                            columns: [
-                                { data: 'DT_RowIndex', name: 'id' },
-                                { data: 'name', name: 'name' },
-                                { data: 'country', name: 'state.country.name' },
-                                { data: 'state', name: 'state.name' },
-                                { data: 'status', name: 'status' },
-                                { data: 'action', name: 'action' }
+                        $('#confirm-delete').modal('hide');
+                        $('#pre-loader').removeClass('d-none');
 
-                            ],
+                        let formData = new FormData();
+                        formData.append('_token', "{{ csrf_token() }}");
+                        formData.append('id', payload.id);
 
-                            bLengthChange: false,
-                            "bDestroy": true,
-                            language: {
-                                search: "<i class='ti-search'></i>",
-                                searchPlaceholder: trans('common.quick_search'),
-                                paginate: {
-                                    next: "<i class='ti-arrow-right'></i>",
-                                    previous: "<i class='ti-arrow-left'></i>"
-                                }
+                        $.ajax({
+                            url: payload.url,
+                            type: "POST",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                $('#pre-loader').addClass('d-none');
+                                toastr.success(response.message, "{{__('common.success')}}");
+                                resetAfterChange();
                             },
-                            dom: 'Bfrtip',
-                            buttons: [{
-                                    extend: 'copyHtml5',
-                                    text: '<i class="fa fa-files-o"></i>',
-                                    title: $("#header_title").text(),
-                                    titleAttr: 'Copy',
-                                    exportOptions: {
-                                        columns: ':visible',
-                                        columns: ':not(:last-child)',
-                                    }
-                                },
-                                {
-                                    extend: 'excelHtml5',
-                                    text: '<i class="fa fa-file-excel-o"></i>',
-                                    titleAttr: 'Excel',
-                                    title: $("#header_title").text(),
-                                    margin: [10, 10, 10, 0],
-                                    exportOptions: {
-                                        columns: ':visible',
-                                        columns: ':not(:last-child)',
-                                    },
-
-                                },
-                                {
-                                    extend: 'csvHtml5',
-                                    text: '<i class="fa fa-file-text-o"></i>',
-                                    titleAttr: 'CSV',
-                                    exportOptions: {
-                                        columns: ':visible',
-                                        columns: ':not(:last-child)',
-                                    }
-                                },
-                                {
-                                    extend: 'pdfHtml5',
-                                    text: '<i class="fa fa-file-pdf-o"></i>',
-                                    title: $("#header_title").text(),
-                                    titleAttr: 'PDF',
-                                    exportOptions: {
-                                        columns: ':visible',
-                                        columns: ':not(:last-child)',
-                                    },
-                                    pageSize: 'A4',
-                                    margin: [0, 0, 0, 0],
-                                    alignment: 'center',
-                                    header: true,
-
-                                },
-                                {
-                                    extend: 'print',
-                                    text: '<i class="fa fa-print"></i>',
-                                    titleAttr: 'Print',
-                                    title: $("#header_title").text(),
-                                    exportOptions: {
-                                        columns: ':not(:last-child)',
-                                    }
-                                },
-                                {
-                                    extend: 'colvis',
-                                    text: '<i class="fa fa-columns"></i>',
-                                    postfixButtons: ['colvisRestore']
+                            error: function(response) {
+                                $('#pre-loader').addClass('d-none');
+                                if(response.responseJSON && response.responseJSON.message){
+                                    toastr.error(response.responseJSON.message, "{{__('common.error')}}");
+                                } else {
+                                    toastr.error("{{__('common.error_message')}}", "{{__('common.error')}}");
                                 }
-                            ],
-                            columnDefs: [{
-                                visible: false
-                            }],
-                            responsive: true,
+                            }
                         });
-
-                    }
+                    });
 
                     function resetAfterChange(TableData){
                         $('#item_table').html(TableData);
-                        YajraReActive();
-
+                        table = initGlobalDataTable('#allData', "{{ route('setup.city.getData') }}", [
+                            { data: 'DT_RowIndex', name: 'id' },
+                            { data: 'name', name: 'name' },
+                            { data: 'country', name: 'state.country.name' },
+                            { data: 'state', name: 'state.name' },
+                            { data: 'status', name: 'status' },
+                            { data: 'action', name: 'action' }
+                    ], {
+                            columnDefs: [
+                                { targets: 5, responsivePriority: 1 },
+                                { targets: 1, responsivePriority: 2 },
+                                { targets: 4, responsivePriority: 3 },
+                                { targets: 0, responsivePriority: 4 },
+                                { targets: 2, responsivePriority: 5 },
+                                { targets: 3, responsivePriority: 6 },
+                            ]
+                        });
                     }
 
 

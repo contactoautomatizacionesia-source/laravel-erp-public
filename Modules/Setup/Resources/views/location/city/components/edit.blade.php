@@ -77,9 +77,9 @@
     
             <div class="col-lg-12 text-center">
                 <div class="d-flex justify-content-center pt_20">
-                    <button type="submit" class="primary-btn semi_large2 fix-gr-bg"><i
-                            class="ti-check"></i>
-                            {{ __('common.update') }}
+                    <button type="submit" class="btn-toolkit btn-primary btn-icon">
+                        <span class="ti-check"></span>
+                        {{ __('common.update') }}
                     </button>
                 </div>
             </div>

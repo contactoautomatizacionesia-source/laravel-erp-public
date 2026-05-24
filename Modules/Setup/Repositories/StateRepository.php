@@ -81,5 +81,17 @@ class StateRepository{
             ];
         });
     }
+
+    public function destroy($id)
+    {
+        $state = State::findOrFail($id);
+
+        // Cascada Lógica para Cities
+        \Modules\Setup\Entities\City::where('state_id', $state->id)->delete();
+
+        $state->delete();
+        
+        return true;
+    }
 }
 

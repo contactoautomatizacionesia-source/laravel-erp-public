@@ -42,4 +42,8 @@ class StateService
         return $this->stateRepository->searchForSelect($countryId, $search, $limit);
     }
     
+    public function destroy($id)
+    {
+        return $this->stateRepository->destroy($id);
+    }
 }

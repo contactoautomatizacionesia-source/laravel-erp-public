@@ -46,9 +46,10 @@ class UpdateCountryRequest extends FormRequest
             ],
             'flag' => [
                 'nullable',
-                'mimes:jpg,png',
-                'max:200',
-                new FlagDimensions(),
+                'image',
+                'mimes:jpeg,png,jpg,gif',
+                'max:2048',
+                'dimensions:min_width=61,min_height=36'
             ],
             'status' => [
                 'required',

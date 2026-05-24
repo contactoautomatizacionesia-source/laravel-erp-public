@@ -26,6 +26,7 @@ class CountryTest extends TestCase
         $user = User::find(1);
         $this->actingAs($user);
 
+        $this->get('/setup/location/country')->assertSee(__('setup.default'));
 
         $code = 'T'.substr(preg_replace('/\D/', '', (string) microtime(true)), -6);
 
@@ -103,5 +104,62 @@ class CountryTest extends TestCase
         ])->assertStatus(200);
 
 
+    }
+
+    public function test_country_get_data_filters_active_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_ACT'.substr(microtime(true)*1000, -6);
+        Country::create(['name' => 'Active'.$unique, 'code' => 'AC'.substr(microtime(true)*1000, -4), 'phonecode' => '1', 'status' => 1, 'flag' => null]);
+        Country::create(['name' => 'Inactive'.$unique, 'code' => 'IC'.substr(microtime(true)*1000, -4), 'phonecode' => '2', 'status' => 0, 'flag' => null]);
+
+        $response = $this->get('/setup/location/country/get-data?draw=1&start=0&length=100&table=active&search[value]=Active'.$unique)
+            ->assertOk();
+
+        $json = $response->json();
+        $names = collect($json['data'])->pluck('name')->toArray();
+
+        $this->assertContains('Active'.$unique, $names, 'Active country should appear in active filter');
+        $this->assertNotContains('Inactive'.$unique, $names, 'Inactive country should NOT appear in active filter');
+    }
+
+    public function test_country_get_data_filters_inactive_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_INA'.substr(microtime(true)*1000, -6);
+        Country::create(['name' => 'Active'.$unique, 'code' => 'AI'.substr(microtime(true)*1000, -4), 'phonecode' => '1', 'status' => 1, 'flag' => null]);
+        Country::create(['name' => 'Inactive'.$unique, 'code' => 'II'.substr(microtime(true)*1000, -4), 'phonecode' => '2', 'status' => 0, 'flag' => null]);
+
+        $response = $this->get('/setup/location/country/get-data?draw=1&start=0&length=500&table=inactive')
+            ->assertOk();
+
+        $json = $response->json();
+        $names = collect($json['data'])->pluck('name')->toArray();
+
+        $this->assertContains('Inactive'.$unique, $names, 'Inactive country should appear in inactive filter');
+        $this->assertNotContains('Active'.$unique, $names, 'Active country should NOT appear in inactive filter');
+    }
+
+    public function test_country_get_data_filters_default_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_DEF'.substr(microtime(true)*1000, -6);
+        Country::create(['name' => 'Default'.$unique, 'code' => 'DC'.substr(microtime(true)*1000, -4), 'phonecode' => '1', 'status' => 1, 'flag' => null, 'is_default' => 1]);
+        Country::create(['name' => 'NonDefault'.$unique, 'code' => 'ND'.substr(microtime(true)*1000, -4), 'phonecode' => '2', 'status' => 1, 'flag' => null, 'is_default' => 0]);
+
+        $response = $this->get('/setup/location/country/get-data?draw=1&start=0&length=100&table=default&search[value]=Default'.$unique)
+            ->assertOk();
+
+        $json = $response->json();
+        $names = collect($json['data'])->pluck('name')->toArray();
+
+        $this->assertContains('Default'.$unique, $names, 'Default country should appear in default filter');
+        $this->assertNotContains('NonDefault'.$unique, $names, 'Non-default country should NOT appear in default filter');
     }
 }

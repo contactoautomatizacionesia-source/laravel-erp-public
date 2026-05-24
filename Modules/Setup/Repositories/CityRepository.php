@@ -138,5 +138,11 @@ class CityRepository{
         });
     }
 
+    public function destroy($id)
+    {
+        $city = City::findOrFail($id);
+        $city->delete();
+        return true;
+    }
 }
 

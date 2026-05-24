@@ -58,7 +58,10 @@ class CountryRepository{
             }
         }
         
-        if(isset($data['flag'])){
+        if (isset($data['remove_flag']) && $data['remove_flag'] == 1) {
+            ImageStore::deleteImage($country->flag);
+            $data['flag'] = null;
+        } elseif(isset($data['flag'])){
             ImageStore::deleteImage($country->flag);
 
             $imagename = ImageStore::saveFlag($data['flag'],$data['name'],61,36);
@@ -119,5 +122,25 @@ class CountryRepository{
         });
     }
 
+    public function destroy($id)
+    {
+        $country = Country::findOrFail($id);
+        
+        // Evitar eliminar si es el país por defecto
+        if ($country->is_default) {
+            throw new \DomainException('No se puede eliminar el país predeterminado.');
+        }
+
+        // Cascada Lógica para States y Cities
+        $states = State::where('country_id', $country->id)->get();
+        foreach ($states as $state) {
+            City::where('state_id', $state->id)->delete();
+            $state->delete();
+        }
+
+        $country->delete();
+        
+        return true;
+    }
 }
 

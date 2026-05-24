@@ -49,9 +49,20 @@ class CountryController extends Controller
         }
     }
 
-    public function getData(){
+    public function getData(Request $request){
         try{
-            $countries = $this->countryService->getAll();
+            $table = $request->get('table', 'all');
+            
+            $countries = \Modules\Setup\Entities\Country::orderBy('name');
+            
+            if ($table === 'active') {
+                $countries->where('status', 1);
+            } elseif ($table === 'inactive') {
+                $countries->where('status', 0);
+            } elseif ($table === 'default') {
+                $countries->where('is_default', 1);
+            }
+            
             return DataTables::of($countries)
             ->addIndexColumn()
             ->editColumn('name',function($country){
@@ -295,6 +306,31 @@ class CountryController extends Controller
         } catch (Exception $e) {
             LogActivity::errorLog($e->getMessage());
             return response()->json([], 500);
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $this->countryService->destroy($id);
+            LogActivity::successLog('Country Deleted Successfully');
+            return response()->json([
+                'status' => 'success',
+                'message' => __('common.deleted_successfully')
+            ], 200);
+        } catch (DomainException $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 422);
+        } catch (Exception $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => __('common.error_message')
+            ], 503);
         }
     }
 

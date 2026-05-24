@@ -86,5 +86,6 @@
     'partial_payment' => 'Pago Parcial',
     'partial_payment_updated_successfully' => 'Pago parcial actualizado exitosamente',
     'partial_payment_setup' => 'Configuración de Pago Parcial',
+    'default' => 'Por defecto',
     "propery_id" => "ID de Propiedad"
 ];

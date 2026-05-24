@@ -43,6 +43,7 @@ Route::middleware(['auth','admin'])->prefix('setup')->group(function() {
     Route::post('/location/country/store', 'CountryController@store')->name('setup.country.store')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::get('/location/country/edit/{id}', 'CountryController@edit')->name('setup.country.edit');
     Route::post('/location/country/update', 'CountryController@update')->name('setup.country.update')->middleware(['permission', 'auth','prohibited_demo_mode']);
+    Route::post('/location/country/destroy', 'CountryController@destroy')->name('setup.country.destroy')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::post('/location/country/status', 'CountryController@status')->name('setup.country.status')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::post('/location/country/preview-cascade', 'CountryController@previewCascade')->name('setup.country.preview-cascade')->middleware(['permission', 'auth']);
     Route::post('/location/country/toggle-default', 'CountryController@toggleDefault')->name('setup.country.toggle-default')->middleware(['permission', 'auth','prohibited_demo_mode']);
@@ -52,6 +53,7 @@ Route::middleware(['auth','admin'])->prefix('setup')->group(function() {
     Route::post('/location/state/store', 'StateController@store')->name('setup.state.store')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::get('/location/state/edit/{id}', 'StateController@edit')->name('setup.state.edit');
     Route::post('/location/state/update', 'StateController@update')->name('setup.state.update')->middleware(['permission', 'auth','prohibited_demo_mode']);
+    Route::post('/location/state/destroy', 'StateController@destroy')->name('setup.state.destroy')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::post('/location/state/status', 'StateController@status')->name('setup.state.status')->middleware(['permission', 'auth','prohibited_demo_mode']);
 
     Route::get('/location/city', 'CityController@index')->name('setup.city.index')->middleware(['permission', 'auth']);
@@ -59,6 +61,7 @@ Route::middleware(['auth','admin'])->prefix('setup')->group(function() {
     Route::post('/location/city/store', 'CityController@store')->name('setup.city.store')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::get('/location/city/edit/{id}', 'CityController@edit')->name('setup.city.edit');
     Route::post('/location/city/update', 'CityController@update')->name('setup.city.update')->middleware(['permission', 'auth','prohibited_demo_mode']);
+    Route::post('/location/city/destroy', 'CityController@destroy')->name('setup.city.destroy')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::post('/location/city/status', 'CityController@status')->name('setup.city.status')->middleware(['permission', 'auth','prohibited_demo_mode']);
     Route::post('/location/city/get-state', 'CityController@getState')->name('setup.city.get-state');
 

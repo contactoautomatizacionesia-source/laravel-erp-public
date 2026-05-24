@@ -3,5 +3,5 @@
     <div class="slider round"></div>
 </label>
 @if((int) $country->is_default === 1)
-    <span class="badge badge-success d-inline-block mt-2">Por defecto</span>
+    <span class="badge badge-success d-inline-block mt-2">{{ __('setup.default') }}</span>
 @endif

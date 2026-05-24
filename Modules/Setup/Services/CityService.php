@@ -55,4 +55,8 @@ class CityService
         return $this->cityRepository->searchCityFull($search, $limit);
     }
     
+    public function destroy($id)
+    {
+        return $this->cityRepository->destroy($id);
+    }
 }

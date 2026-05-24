@@ -2,40 +2,80 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{asset(asset_path('modules/setup/css/country.css'))}}" />
-
+<style>
+    .flag-preview-img {
+        object-fit: cover;
+        width: 61px;
+        height: 36px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+    .location-inline-create h3.mb-20 {
+        margin-bottom: 40px;
+    }
+    .location-inline-create .white-box.mb-5 {
+        padding-top: 20px;
+    }
+</style>
 @endsection
 
 @section('mainContent')
 
     <section class="admin-visitor-area up_st_admin_visitor">
-
-
         <div class="container-fluid p-0">
             <div class="row justify-content-center">
                 @if (permissionCheck('setup.country.store'))
                     <div class="col-lg-4">
                         <div class="row">
-                            <div id="formHtml" class="col-lg-12">
+                            <div id="formHtml" class="col-lg-12 location-inline-create">
                                 @include('setup::location.country.components.create')
                             </div>
                         </div>
                     </div>
                 @endif
 
-                <div class="col-lg-8 white_box_30px">
-                    <div class="col-12">
-                        <div class="box_header common_table_header">
-                            <div class="main-title d-md-flex">
-                            <h3 class="mb-0 mr-30 mb_xs_15px mb_sm_20px">{{ __('common.country') }} {{ __('common.list')  }}</h3>
-
-
+                <div class="col-lg-8 white_box_30px mb_30">
+                    <div class="col-md-12 mb-10">
+                        <div class="box_header_right">
+                            <div class="pos_tab_btn justify-content-end">
+                                <ul class="nav ign-scrollbar flex-nowrap w-100 overflow-auto pb-2">
+                                    <li class="nav-item">
+                                        <a class="nav-link active show" href="#all_countries" role="tab" data-toggle="tab" aria-selected="true" data-table="all">
+                                            {{ __('common.all') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#active_countries" role="tab" data-toggle="tab" aria-selected="false" data-table="active">
+                                            {{ __('common.active') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#inactive_countries" role="tab" data-toggle="tab" aria-selected="false" data-table="inactive">
+                                            {{ __('common.inactive') }}
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#default_countries" role="tab"
+                                           data-toggle="tab" aria-selected="false" data-table="default">
+                                            {{ __('setup.default') }}
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        <div class="box_header common_table_header">
+                            <div class="main-title d-md-flex">
+                                <h3 class="mb-0 mr-30 mb_xs_15px mb_sm_20px" id="table_title">{{ __('common.country') }} {{ __('common.list')  }}</h3>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="QA_section QA_section_heading_custom check_box_table">
                         <div class="QA_table">
                             <div class="" id="item_table">
-
                                 @include('setup::location.country.components.list')
                             </div>
                         </div>
@@ -47,6 +87,7 @@
     </section>
 
     @include('setup::location.components.cascade_confirm_modal')
+    @include('backEnd.partials.delete_modal',['item_name' => __('common.country')])
 
 @endsection
 

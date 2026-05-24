@@ -3,12 +3,13 @@
 namespace Modules\Setup\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\INTShipping\Entities\Continent;
 use Spatie\Translatable\HasTranslations;
 
 class Country extends Model
 {
-    use HasTranslations;
+    use HasTranslations, SoftDeletes;
 
 
     protected $table = 'countries';

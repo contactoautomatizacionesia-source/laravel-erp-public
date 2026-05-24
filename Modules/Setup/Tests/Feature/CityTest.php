@@ -130,4 +130,76 @@ class CityTest extends TestCase
 
     }
 
+    public function test_city_get_data_filters_active_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_CY'.substr(microtime(true)*1000, -6);
+        $country = Country::create(['name' => 'CityFilterCountry', 'code' => 'CFC'.$unique, 'phonecode' => '1', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        $state = State::create(['name' => 'CityFilterState', 'country_id' => $country->id, 'status' => 1]);
+        City::create(['name' => 'ActiveCity'.$unique, 'state_id' => $state->id, 'country_id' => $country->id, 'status' => 1]);
+        City::create(['name' => 'InactiveCity'.$unique, 'state_id' => $state->id, 'country_id' => $country->id, 'status' => 0]);
+
+        // recordsTotal reflects all records that match the query filter
+        // table=active should count 864 seeded + our 1 test = 865+
+        $response = $this->get('/setup/location/city/get-data?draw=1&start=0&length=100&table=active')
+            ->assertOk();
+
+        $json = $response->json();
+        $this->assertGreaterThan(864, $json['recordsTotal'], 'Active filter recordsTotal should include test-created active city');
+
+        // Verify every returned row on first page has status=1 (filter applied correctly)
+        $names = collect($json['data'])->pluck('name')->toArray();
+        $this->assertNotContains('InactiveCity'.$unique, $names, 'Inactive city should NOT appear in active filter');
+    }
+
+    public function test_city_get_data_filters_inactive_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_CYI'.substr(microtime(true)*1000, -6);
+        $country = Country::create(['name' => 'CityFilterCountry2', 'code' => 'CFC2'.$unique, 'phonecode' => '1', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        $state = State::create(['name' => 'CityFilterState2', 'country_id' => $country->id, 'status' => 1]);
+        City::create(['name' => 'ActiveCity'.$unique, 'state_id' => $state->id, 'country_id' => $country->id, 'status' => 1]);
+        City::create(['name' => 'InactiveCity'.$unique, 'state_id' => $state->id, 'country_id' => $country->id, 'status' => 0]);
+
+        $response = $this->get('/setup/location/city/get-data?draw=1&start=0&length=100&table=inactive')
+            ->assertOk();
+
+        $json = $response->json();
+        $this->assertGreaterThan(47078, $json['recordsTotal'], 'Inactive filter recordsTotal should include test-created inactive city');
+
+        // Verify every returned row on first page has status=0 (filter applied correctly)
+        $names = collect($json['data'])->pluck('name')->toArray();
+        $this->assertNotContains('ActiveCity'.$unique, $names, 'Active city should NOT appear in inactive filter');
+    }
+
+    public function test_city_get_data_filters_default_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        // Use the EXISTING default country from seed data
+        $defaultCountry = Country::where('is_default', 1)->first();
+        $this->assertNotNull($defaultCountry, 'Seeded default country must exist');
+
+        $unique = '_CYD'.substr(microtime(true)*1000, -6);
+        $otherCountry = Country::create(['name' => 'OtherCityCountry'.$unique, 'code' => 'OCC'.$unique, 'phonecode' => '2', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        $defaultState = State::create(['name' => 'DefaultCityState'.$unique, 'country_id' => $defaultCountry->id, 'status' => 1]);
+        $otherState = State::create(['name' => 'OtherCityState'.$unique, 'country_id' => $otherCountry->id, 'status' => 1]);
+        City::create(['name' => 'InDefaultCity'.$unique, 'state_id' => $defaultState->id, 'country_id' => $defaultCountry->id, 'status' => 1]);
+        City::create(['name' => 'NotInDefaultCity'.$unique, 'state_id' => $otherState->id, 'country_id' => $otherCountry->id, 'status' => 1]);
+
+        $response = $this->get('/setup/location/city/get-data?draw=1&start=0&length=100&table=default')
+            ->assertOk();
+
+        $json = $response->json();
+
+        // Verify all returned rows have country matching the default country name
+        foreach ($json['data'] as $row) {
+            $this->assertEquals($defaultCountry->name, $row['country'], 'Every city in default filter must be in the default country');
+        }
+    }
 }

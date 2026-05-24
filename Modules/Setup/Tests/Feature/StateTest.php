@@ -96,4 +96,72 @@ class StateTest extends TestCase
 
 
     }
+
+    public function test_state_get_data_filters_active_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_ST'.substr(microtime(true)*1000, -6);
+        $country = Country::create(['name' => 'StateFilterCountry', 'code' => 'SFC'.$unique, 'phonecode' => '1', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        State::create(['name' => 'Active'.$unique, 'country_id' => $country->id, 'status' => 1]);
+        State::create(['name' => 'Inactive'.$unique, 'country_id' => $country->id, 'status' => 0]);
+
+        $response = $this->get('/setup/location/state/get-data?draw=1&start=0&length=100&table=active')
+            ->assertOk();
+
+        $json = $response->json();
+        $names = collect($json['data'])->pluck('name')->toArray();
+
+        $this->assertContains('Active'.$unique, $names, 'Active state should appear in active filter');
+        $this->assertNotContains('Inactive'.$unique, $names, 'Inactive state should NOT appear in active filter');
+    }
+
+    public function test_state_get_data_filters_inactive_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        $unique = '_STI'.substr(microtime(true)*1000, -6);
+        $country = Country::create(['name' => 'StateFilterCountry2', 'code' => 'SFC2'.$unique, 'phonecode' => '1', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        State::create(['name' => 'Active'.$unique, 'country_id' => $country->id, 'status' => 1]);
+        State::create(['name' => 'Inactive'.$unique, 'country_id' => $country->id, 'status' => 0]);
+
+        // recordsTotal reflects ALL records in the query (before DataTables pagination)
+        // so table=inactive includes all 4094 seeded + our 1 test inactive = 4095+
+        $response = $this->get('/setup/location/state/get-data?draw=1&start=0&length=100&table=inactive')
+            ->assertOk();
+
+        $json = $response->json();
+        $this->assertGreaterThan(4094, $json['recordsTotal'], 'Inactive filter recordsTotal should include test-created inactive state');
+
+        // Verify every returned row on first page has status=0 (filter applied correctly)
+        $names = collect($json['data'])->pluck('name')->toArray();
+        $this->assertNotContains('Active'.$unique, $names, 'Active state should NOT appear in inactive filter');
+    }
+
+    public function test_state_get_data_filters_default_by_name_unique()
+    {
+        $user = User::find(1);
+        $this->actingAs($user);
+
+        // Use the EXISTING default country from seed data (don't create a new one)
+        $defaultCountry = Country::where('is_default', 1)->first();
+        $this->assertNotNull($defaultCountry, 'Seeded default country must exist');
+
+        $unique = '_STD'.substr(microtime(true)*1000, -6);
+        $otherCountry = Country::create(['name' => 'OtherStateCountry'.$unique, 'code' => 'OSC'.$unique, 'phonecode' => '2', 'flag' => null, 'status' => 1, 'is_default' => 0]);
+        State::create(['name' => 'InDefault'.$unique, 'country_id' => $defaultCountry->id, 'status' => 1]);
+        State::create(['name' => 'NotInDefault'.$unique, 'country_id' => $otherCountry->id, 'status' => 1]);
+
+        $response = $this->get('/setup/location/state/get-data?draw=1&start=0&length=100&table=default')
+            ->assertOk();
+
+        $json = $response->json();
+
+        // Verify all returned rows belong to the default country
+        foreach ($json['data'] as $row) {
+            $this->assertEquals($defaultCountry->id, $row['country_id'], 'Every state in default filter must be in the default country');
+        }
+    }
 }

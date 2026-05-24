@@ -86,5 +86,6 @@
     'partial_payment' => 'Partial Payment',
     'partial_payment_updated_successfully' => 'Partial Payment updated successfully',
     'partial_payment_setup' => 'Partial Payment Setup',
+    'default' => 'Default',
     "propery_id" => "Property ID"
 ];

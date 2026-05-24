@@ -43,10 +43,24 @@ class CityController extends Controller
         }
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
         try {
+            $table = $request->get('table', 'all');
             $cities = $this->cityService->getAll();
+            
+            if ($table === 'active') {
+                $cities->where('cities.status', 1);
+            } elseif ($table === 'inactive') {
+                $cities->where('cities.status', 0);
+            } elseif ($table === 'default') {
+                $defaultCountry = \Modules\Setup\Entities\Country::where('is_default', 1)->first();
+                if ($defaultCountry) {
+                    $cities->where('countries.id', $defaultCountry->id);
+                } else {
+                    $cities->whereRaw('1 = 0');
+                }
+            }
 
             $response = DataTables::of($cities)
             ->orderColumn('name', 'cities.name $1')
@@ -211,6 +225,31 @@ class CityController extends Controller
         $limit = $request->get('limit', 10);
 
         return $this->cityService->searchCityFull($search, $limit);
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $this->cityService->destroy($id);
+            LogActivity::successLog('City Deleted Successfully');
+            return response()->json([
+                'status' => 'success',
+                'message' => __('common.deleted_successfully')
+            ], 200);
+        } catch (DomainException $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 422);
+        } catch (Exception $e) {
+            LogActivity::errorLog($e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => __('common.error_message')
+            ], 503);
+        }
     }
 
 }

@@ -52,4 +52,9 @@ class CountryService
     {
         return $this->countryRepository->searchForSelect($search, $limit);
     }
+
+    public function destroy($id)
+    {
+        return $this->countryRepository->destroy($id);
+    }
 }
